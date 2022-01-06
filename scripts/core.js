@@ -109,17 +109,23 @@ class HTMLToScene {
 			document.getElementById('ui-bottom').style.display = 'none';
 			if (this.rightDisabled == false) {
 				document.getElementById('ui-top').style.display = 'none';
+				document.getElementById('ui-right').style.display = 'flex';
 			} else {
 				document.getElementById('ui-right').style.display = 'none';
+				document.getElementById('ui-top').style.display = 'inline-block';
 				document.getElementById('ui-top').style.marginLeft = '130px'; //Small fix to the top styling
 			}
 		} else {
+			document.getElementById('ui-left').style.display = 'flex';
+			document.getElementById('ui-bottom').style.display = 'flex';
 			if (this.rightDisabled == true) {
 				document.getElementById('ui-right').style.display = 'none';
 			}
 		}
 		if (this.hidePaused == true) {
 			document.getElementById('pause').style.display = 'none';
+		} else {
+			document.getElementById('pause').style.display = 'block';
 		}
 	}
 
