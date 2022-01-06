@@ -1,0 +1,47 @@
+{
+  "name": "html-to-scene",
+  "title": "HTML to Scene",
+  "description": "A hacky module that allows its user to replace scene contents into a local html file or external website with the power of iframes.",
+  "author": "Javiondox",
+  "authors": [
+		{
+			"name": "Javiondox",
+			"url": "https://github.com/javiondox",
+			"discord": "javiondox#6609"
+		}
+	],
+  "version": "1.0.0",
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "9",
+  "scripts": [
+  "scripts/core.js"
+  ],
+  "languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		},
+		{
+			"lang": "es",
+			"name": "Español",
+			"path": "lang/es.json"
+		}
+	],
+	"manifest": "https://github.com/javiondox/html-to-scene/releases/latest/download/module.json",
+	"url": "https://github.com/javiondox/html-to-scene",
+	"download": "https://github.com/javiondox/html-to-scene/releases/latest/download/html-to-scene.zip",
+	"readme": "https://github.com/javiondox/html-to-scene/blob/master/readme.md",
+	"bugs": "https://github.com/javiondox/html-to-scene/issues",
+	"changelog": "https://github.com/javiondox/html-to-scene/releases",
+	"media": [
+		{
+			"type": "cover",
+			"url": "https://raw.githubusercontent.com/javiondox/html-to-scene/master/cover.png"
+		},
+		{
+			"type": "icon",
+			"url": "https://avatars2.githubusercontent.com/u/57767414"
+		}
+	]
+} 

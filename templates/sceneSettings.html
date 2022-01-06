@@ -1,0 +1,49 @@
+<div class="tab" data-tab="htmltoscene">
+	<hr>
+	<label style="text-align:center;font-weight: bold;">{{ localize "htmltoscene.mainsettings" }}</label>
+	<hr>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.enable.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.enable" data-dtype="Boolean"{{#if enable}} checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.enable.desc" }}</p>
+	</div>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.fileLoc.name" }}</label>
+		<div class="form-fields">
+                <!--{{filePicker target="html"}}-->
+                <input class="html-input" type="text" name="flags.htmltoscene.fileLoc" placeholder="{{localize 'File Path'}}" id="filepickerinput"/>
+            </div>
+            <p class="notes">{{localize "htmltoscene.fileLoc.hint"}}</p>
+			<p class="notes">{{ localize "htmltoscene.recommendationtip" }}{{ localize "htmltoscene.fileLoc.tip" }}</p>
+	</div>
+	<hr>
+	<label style="text-align:center;font-weight: bold;">{{ localize "htmltoscene.uisettings" }}</label>
+	<hr>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.minUI.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.minUI" data-dtype="Boolean" {{#if minUI}} checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.minUI.desc" }}</p>
+	</div>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.spaceRight.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.spaceRight" data-dtype="Boolean" {{#if spaceRight}} checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.spaceRight.desc" }}</p>
+		<p class="notes"><b>{{ localize "htmltoscene.warningtip" }}</b>{{ localize "htmltoscene.spaceRight.tip" }}</p>
+	</div>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.rightDisabled.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.rightDisabled" data-dtype="Boolean" {{#if rightDisabled}} checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.rightDisabled.desc" }}</p>
+		<p class="notes"><b>{{ localize "htmltoscene.warningtip" }}</b>{{ localize "htmltoscene.rightDisabled.tip" }}</p>
+	</div>
+	<hr>
+	<label style="text-align:center;font-weight: bold;">{{ localize "htmltoscene.miscsettings" }}</label>
+	<hr>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.hidePaused.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.hidePaused" data-dtype="Boolean" {{#if showPaused}} checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.hidePaused.desc" }}</p>
+	</div>
+	<hr>
+	<p class="notes" style="font-style:italic;">{{ localize "htmltoscene.rememberjsexecution" }}</p>
+</div>

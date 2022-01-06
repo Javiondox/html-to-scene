@@ -1,0 +1,39 @@
+{
+	"htmltoscene": {
+		"title": "HTML To Scene",
+		"description": "Load a local html file on this scene.",
+		"mainsettings": "Main settings",
+		"uisettings": "UI settings",
+		"miscsettings": "Miscellaneous settings",
+		"recommendationtip": "Recomendation: ",
+		"warningtip":"WARNING: ",
+		"enable": {
+			"name": "Enable",
+			"desc": "Enable HTML To Scene on this scene."
+		},
+		"fileLoc": {
+			"name": "Select HTML file",
+			"hint": "You can select any HTML file stored on your FoundryVTT's data folder.",
+			"tip": "Do it on a empty canvas to increase performance. You can also put some websites that allow iframes."
+		},
+		"minUI": {
+			"name": "Minimal UI",
+			"desc": "Remove unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
+		},
+		"spaceRight": {
+			"name": "Respect right controls",
+			"desc": "Add an empty space under the right controls.",
+			"tip": "This setting currently makes the iframe non-responsive. (It won't scale correctly on window size change)."
+		},
+		"rightDisabled": {
+			"name": "Disable right controls",
+			"desc": "Removes the right controls from the UI, enabling back the scene changer on the top. (Ideal if your group communicates via voice chat or doesn't need to throw dice).",
+			"tip": "You might want to have other scene visible to gain back normal FoundryVTT's controls. (If not, you can always disable this module for the current scene)."
+		},
+		"hidePaused": {
+			"name": "Hide 'Game Paused'",
+			"desc": "Hide 'Game Paused' over the HTML file if the game is paused."
+		},
+		"rememberjsexecution": "Please, remember to input only files that you fully trust. You might be allowing unwanted javascript execution in your sistem. And that is bad."
+	}
+}
