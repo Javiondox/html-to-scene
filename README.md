@@ -30,7 +30,7 @@
   ## Use cases (Ideas)
   
   - You can make custom landing pages with fully animated elements, shaders and/or 3D graphics.
-  - 
+ 
   - You can link your wiki or other tools in FoundryVTT. (And even host it with <Your IP>:3000/Relative/Path/to/your.html) (You don't need the module for the last bit).
   
   - You can play other games inside FoundryVTT (Even 3D ones). It *may* even work for more advanced puzzles!
