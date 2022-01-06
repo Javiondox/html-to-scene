@@ -42,4 +42,4 @@
  ## Thanks
 Special thanks to [zeel01](https://github.com/zeel01) for allowing me to learn how to make the interfaces on FoundryVTT properly and copy some code of [pin-fixer](https://github.com/zeel01/pin-fixer) for that purpose.
   
-Thanks to the amazing people on the FoundryVTT and the League of Extraordinary FoundryVTT Developers for some help and tips.
+Thanks to the amazing people on the FoundryVTT and the League of Extraordinary FoundryVTT Developers discords for some help and tips.
