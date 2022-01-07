@@ -28,12 +28,12 @@
 			"path": "lang/es.json"
 		}
 	],
-	"manifest": "https://github.com/javiondox/html-to-scene/releases/latest/download/module.json",
-	"url": "https://github.com/javiondox/html-to-scene",
-	"download": "https://github.com/javiondox/html-to-scene/releases/latest/download/html-to-scene.zip",
-	"readme": "https://github.com/javiondox/html-to-scene/blob/master/readme.md",
-	"bugs": "https://github.com/javiondox/html-to-scene/issues",
-	"changelog": "https://github.com/javiondox/html-to-scene/releases",
+	"manifest": "https://github.com/Javiondox/html-to-scene/releases/latest/download/module.json",
+	"url": "https://github.com/Javiondox/html-to-scene",
+	"download": "https://github.com/Javiondox/html-to-scene/releases/latest/download/html-to-scene.zip",
+	"readme": "https://github.com/Javiondox/html-to-scene/blob/master/readme.md",
+	"bugs": "https://github.com/Javiondox/html-to-scene/issues",
+	"changelog": "https://github.com/Javiondox/html-to-scene/releases",
 	"media": [
 		{
 			"type": "cover",
