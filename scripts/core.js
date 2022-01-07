@@ -80,8 +80,7 @@ class HTMLToScene {
 
 		if (this.spaceRight == true) {
 			var rightControlsElement = document.getElementById('ui-right');
-			console.log('HTML to Scene |' + rightControlsElement.offsetWidth);
-			widthUImod = rightControlsElement.offsetWidth;
+			widthUImod = '' + rightControlsElement.offsetWidth;
 			canvasWidth =
 				(window.innerWidth ||
 					document.documentElement.clientWidth ||
@@ -103,7 +102,15 @@ class HTMLToScene {
 		);
 	}
 
+	/**
+	 * Hides or shows FoundryVTT UI elements depending on user preferences for the scene.
+	 *
+	 * @param  {...any} args
+	 */
 	static setUI(...args) {
+		//TODO Look to replace document.getElementById for jQuery selectors for increased readability.
+		//TODO Test how it works themes. Might have to store the previous state.
+		//Here the redundancy is important, in the case of the user changes options in the same scene. Learned the hard way.
 		if (this.minUI == true) {
 			document.getElementById('ui-left').style.display = 'none';
 			document.getElementById('ui-bottom').style.display = 'none';
@@ -113,7 +120,7 @@ class HTMLToScene {
 			} else {
 				document.getElementById('ui-right').style.display = 'none';
 				document.getElementById('ui-top').style.display = 'inline-block';
-				document.getElementById('ui-top').style.marginLeft = '130px'; //Small fix to the top styling
+				document.getElementById('ui-top').style.marginLeft = '130px'; //Small fix to the top styling to keep it in the same place
 			}
 		} else {
 			document.getElementById('ui-left').style.display = 'flex';
@@ -122,19 +129,28 @@ class HTMLToScene {
 				document.getElementById('ui-right').style.display = 'none';
 			}
 		}
+
 		if (this.hidePaused == true) {
 			document.getElementById('pause').style.display = 'none';
 		} else {
 			document.getElementById('pause').style.display = 'block';
 		}
 	}
-
+	/**
+	 * Shows back FoundryVTT UI elements.
+	 *
+	 * @param  {...any} args
+	 */
+	//TODO Test how it works themes. Might have to store the previous state.
 	static restoreUI(...args) {
 		console.log('HTML to Scene | Restoring FoundryVTT features...');
+
+		//Checking if the iframe still exists, and deleting it in that case.
 		var iframeNode = document.getElementById('htmltoiframe');
 		if (iframeNode != null) document.body.removeChild(iframeNode);
-		iframeNode = null;
+		iframeNode = null; //Deleting iframe reference.
 
+		//TODO Look to replace document.getElementById for jQuery selectors for increased readability.
 		//Restoring FoundryVTT's UI, this might not work with UI modifications.
 		document.getElementById('ui-left').style.display = 'flex';
 		document.getElementById('ui-bottom').style.display = 'flex';
@@ -144,6 +160,13 @@ class HTMLToScene {
 		document.getElementById('pause').style.display = 'block';
 	}
 
+	/**
+	 * Creates and returns a iframe node with a given height and width.
+	 *
+	 * @param {String} height
+	 * @param {String} width
+	 * @returns
+	 */
 	static createIframe(height, width) {
 		var ifrm = document.createElement('iframe');
 		ifrm.setAttribute('src', this.fileLoc);
@@ -186,6 +209,7 @@ class HTMLToScene {
 			)}</a>`
 		);
 		ambTab.after(await this.getSceneHtml(this.getSceneTemplateData(data)));
+		//TODO Obtain this value from the scene flags, not from the class. Related bug: Looking to other scene that uses this module, will have the value of the actual one.
 		$('#filepickerinput').val(this.fileLoc);
 	}
 
@@ -209,6 +233,12 @@ class HTMLToScene {
 		return data;
 	}
 
+	/**
+	 * Fills the template with correct values.
+	 *
+	 * @param {HTMLToSceneSettings} settings
+	 * @returns
+	 */
 	static async getSceneHtml(settings) {
 		return await renderTemplate(
 			'modules/html-to-scene/templates/sceneSettings.html',
