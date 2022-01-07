@@ -26,7 +26,7 @@ There, you will be able to change how the module works. By default, if you enabl
 
 As it is loaded as an iframe, FoundryVTT doesn't have a way to sync them between players without the use of advanced techniques: The page will be delivered to everyone on the same scene at the same time, but further interactions with it won't be synced between players.
 
-You should know your players' download speed (and your upload speed) and know how optimized is the file or application you are trying to load. Bundling big files will take time to show up. And nothing will indicate the progress of the upload apart.
+You should know your players' download speed (and your upload speed) and know how optimized is the file or application you are trying to load. Bundling big files will take time to show up. And nothing will indicate the progress of the upload.
 
 **DO NOT** introduce files that you don't fully trust. Most DMs use FoundryVTT's electron client that is (in essence) an older build of Google Chromium (In what Google Chrome bases of). That makes you vulnerable. And if you run that file during a game, your players too. If you still don't get it, let me explain it in a simpler way: You're using an old version of the world's most widely used browser and giving full code execution on your machine.
 
