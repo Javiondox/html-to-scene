@@ -10,11 +10,11 @@
 	<div class="form-group">
 		<label>{{ localize "htmltoscene.fileLoc.name" }}</label>
 		<div class="form-fields">
-                <!--{{filePicker target="html"}}-->
-                <input class="html-input" type="text" name="flags.htmltoscene.fileLoc" placeholder="{{localize 'File Path'}}" id="filepickerinput"/>
-            </div>
-            <p class="notes">{{localize "htmltoscene.fileLoc.hint"}}</p>
-			<p class="notes">{{ localize "htmltoscene.recommendationtip" }}{{ localize "htmltoscene.fileLoc.tip" }}</p>
+            <!--{{filePicker target="html"}}-->
+            <input class="html-input" type="text" name="flags.htmltoscene.fileLoc" placeholder="{{localize 'File Path'}}" value={{fileLoc}}/>
+        </div>
+        <p class="notes">{{localize "htmltoscene.fileLoc.hint"}}</p>
+		<p class="notes">{{ localize "htmltoscene.recommendationtip" }}{{ localize "htmltoscene.fileLoc.tip" }}</p>
 	</div>
 	<hr>
 	<label style="text-align:center;font-weight: bold;">{{ localize "htmltoscene.uisettings" }}</label>

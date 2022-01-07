@@ -208,8 +208,6 @@ class HTMLToScene {
 		);
 		let sceneTemplateData = await this.getSceneTemplateData(data);
 		ambTab.after(await this.getSceneHtml(sceneTemplateData));
-		//TODO Obtain this value from the scene flags. Related bug: Opening two scene configurations, will delete the first one's contents. (Better solution than the first one used)
-		$('#filepickerinput').val(sceneTemplateData.fileLoc);
 	}
 
 	/**
