@@ -45,6 +45,7 @@ Also, for your own safety, try to not log in to other websites using this module
 ... and more, the sky is the limit!
 
 ![A game running inside FoundryVTT](exampleimage001.png)
+![A website FoundryVTT](exampleimage002.png)
 
 ## Thanks
 
