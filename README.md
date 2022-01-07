@@ -36,7 +36,7 @@ Also, for your own safety, try to not log in to other websites using this module
 
 - You can make custom landing pages with fully animated elements, shaders and/or 3D graphics even.
 
-- You can link your wiki or other tools INSIDE FoundryVTT. (And even host it with <Your Adress>:3000/Relative/Path/to/your.html) (You don't need the module for the last bit).
+- You can link your wiki or other tools INSIDE FoundryVTT. (And even host it with _Your Address_:3000/Relative/Path/to/your.html) (You don't need the module for the last bit).
 
 - You can play other games inside FoundryVTT (Even 3D ones) if exported to HTML. You could use it for making more advanced puzzles! (Tested with Godot Engine)
 
