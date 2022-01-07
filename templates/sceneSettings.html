@@ -11,7 +11,7 @@
 		<label>{{ localize "htmltoscene.fileLoc.name" }}</label>
 		<div class="form-fields">
             <!--{{filePicker target="html"}} Same issue: https://gitlab.com/foundrynet/foundryvtt/-/issues/6386-->
-            <input class="html-input" type="text" name="flags.htmltoscene.fileLoc" placeholder="{{localize 'File Path'}}" value={{fileLoc}}/>
+            <input class="html-input" type="text" name="flags.htmltoscene.fileLoc" placeholder="{{localize 'File Path'}}" value="{{fileLoc}}"/>
         </div>
         <p class="notes">{{localize "htmltoscene.fileLoc.hint"}}</p>
 		<p class="notes">{{ localize "htmltoscene.recommendationtip" }}{{ localize "htmltoscene.fileLoc.tip" }}</p>
