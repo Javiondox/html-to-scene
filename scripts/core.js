@@ -24,7 +24,6 @@ class HTMLToScene {
 		return false;
 	}
 
-	//static get displayOnTop() { return false }; //REMOVED: Potential for getting stuck. This allowed the iframe to be displayed on top of the hud.
 	/** @type {Object} */
 	static get flags() {
 		return canvas.scene.data.flags;
@@ -177,14 +176,6 @@ class HTMLToScene {
 		ifrm.style.left = 0;
 		ifrm.style.top = 0;
 		ifrm.frameborder = 0;
-
-		/**
-		*
-	   	* See displayOnTop() (Also commented)
-		*
-		* if (displayOnTop == true) {
-		*	ifrm.style.zIndex = 2147483649;
-		}**/
 
 		return ifrm;
 	}
