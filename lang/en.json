@@ -23,7 +23,7 @@
 		"spaceRight": {
 			"name": "Respect right controls",
 			"desc": "Adds an empty space under the right controls.",
-			"tip": "You can change the color of the canvas's background color to affect the color behind the controls."
+			"tip": "You can change the color of the canvas' background color to affect the color behind the controls."
 		},
 		"rightDisabled": {
 			"name": "Disable right controls",
