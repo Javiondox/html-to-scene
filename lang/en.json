@@ -18,12 +18,12 @@
 		},
 		"minUI": {
 			"name": "Minimal UI",
-			"desc": "Remove unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
+			"desc": "Removes unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
 		},
 		"spaceRight": {
 			"name": "Respect right controls",
-			"desc": "Add an empty space under the right controls.",
-			"tip": "This setting currently makes the iframe non-responsive. (It won't scale correctly on window size change)."
+			"desc": "Adds an empty space under the right controls.",
+			"tip": "You can change the color of the canvas's background color to affect the color behind the controls."
 		},
 		"rightDisabled": {
 			"name": "Disable right controls",

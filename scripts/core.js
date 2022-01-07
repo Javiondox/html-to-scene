@@ -75,15 +75,9 @@ class HTMLToScene {
 
 		var canvasHeight = '100%';
 		var canvasWidth;
-		var widthUImod = 0;
 
 		if (this.spaceRight == true) {
-			var rightControlsElement = document.getElementById('ui-right');
-			widthUImod = '' + rightControlsElement.offsetWidth;
-			canvasWidth =
-				(window.innerWidth ||
-					document.documentElement.clientWidth ||
-					document.body.clientWidth) - widthUImod; //Non responsive solution
+			canvasWidth = this.calcSpacedWidth() + 'px'; //Non responsive solution, made responsive in the canvasPan hook.
 		} else {
 			canvasWidth = '100%'; //Responsive
 		}
@@ -156,6 +150,29 @@ class HTMLToScene {
 		$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' }); //Default FoundryVTT value
 		$('#ui-right').css('display', 'flex');
 		$('#pause').show();
+	}
+
+	/**
+	 *
+	 * @returns Width of the screen in pixels minus the width of the right controls
+	 */
+	static calcSpacedWidth() {
+		let rightControlsElement = document.getElementById('ui-right');
+		let widthUImod = '' + rightControlsElement.offsetWidth;
+		return (
+			(window.innerWidth ||
+				document.documentElement.clientWidth ||
+				document.body.clientWidth) - widthUImod
+		);
+	}
+
+	/**
+	 * Updates iframe's width in the only case where it isn't responsive on the canvasPan hook (Triggered on a window size change).
+	 */
+	static updateWidth() {
+		if (this.enabled && this.spaceRight) {
+			$('#htmltoiframe').width(this.calcSpacedWidth());
+		}
 	}
 
 	/**
@@ -245,3 +262,4 @@ Hooks.on('renderSceneConfig', (...args) =>
 );
 Hooks.on('canvasReady', (...args) => HTMLToScene.replace(...args));
 Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
+Hooks.on('canvasPan', () => HTMLToScene.updateWidth());

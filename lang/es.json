@@ -23,7 +23,7 @@
 		"spaceRight": {
 			"name": "Respeta los controles de la derecha",
 			"desc": "Añade un espacio en blanco bajo los controles de la derecha.",
-			"tip": "Este ajuste hace actualmente el iframe no responsivo. (No escalará correctamente cuando la ventana cambie de tamaño)."
+			"tip": "Puedes cambiar el color del fondo de la escena para cambiar el color que se muestra bajo los controles."
 		},
 		"rightDisabled": {
 			"name": "Desactiva los controles de la derecha",
