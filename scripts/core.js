@@ -217,7 +217,7 @@ class HTMLToScene {
 			minUI: true,
 			spaceRight: true,
 			rightDisabled: false,
-			showPaused: false,
+			hidePaused: false,
 		};
 		return data;
 	}
