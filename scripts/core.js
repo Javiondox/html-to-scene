@@ -121,6 +121,7 @@ class HTMLToScene {
 				$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' }); //Small fix to the top styling to keep it in the same place
 			}
 		} else {
+			$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' });
 			$('#ui-left').css('display', 'flex');
 			$('#ui-bottom').css('display', 'flex');
 			if (this.rightDisabled == true) {
