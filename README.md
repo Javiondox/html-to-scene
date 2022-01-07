@@ -44,6 +44,8 @@ Also, for your own safety, try to not log in to other websites using this module
 
 ... and more, the sky is the limit!
 
+![A game running inside FoundryVTT](exampleimage001.png)
+
 ## Thanks
 
 Special thanks to [zeel01](https://github.com/zeel01) for allowing me to learn how to make the interfaces on FoundryVTT properly and copy some code of [pin-fixer](https://github.com/zeel01/pin-fixer) for that purpose.
