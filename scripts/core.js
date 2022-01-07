@@ -108,32 +108,32 @@ class HTMLToScene {
 	 * @param  {...any} args
 	 */
 	static setUI(...args) {
-		//TODO Look to replace document.getElementById for jQuery selectors for increased readability.
-		//TODO Test how it works themes. Might have to store the previous state.
+		//TODO Test how it works with themes. Might have to store the previous state.
 		//Here the redundancy is important, in the case of the user changes options in the same scene. Learned the hard way.
 		if (this.minUI == true) {
-			document.getElementById('ui-left').style.display = 'none';
-			document.getElementById('ui-bottom').style.display = 'none';
+			$('#ui-left').hide();
+			$('#ui-bottom').hide();
 			if (this.rightDisabled == false) {
-				document.getElementById('ui-top').style.display = 'none';
-				document.getElementById('ui-right').style.display = 'flex';
+				$('#ui-top').hide();
+				$('#ui-right').css('display', 'flex');
 			} else {
-				document.getElementById('ui-right').style.display = 'none';
-				document.getElementById('ui-top').style.display = 'inline-block';
-				document.getElementById('ui-top').style.marginLeft = '130px'; //Small fix to the top styling to keep it in the same place
+				$('#ui-right').hide();
+				$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' }); //Small fix to the top styling to keep it in the same place
 			}
 		} else {
-			document.getElementById('ui-left').style.display = 'flex';
-			document.getElementById('ui-bottom').style.display = 'flex';
+			$('#ui-left').css('display', 'flex');
+			$('#ui-bottom').css('display', 'flex');
 			if (this.rightDisabled == true) {
-				document.getElementById('ui-right').style.display = 'none';
+				$('#ui-right').hide();
+			} else {
+				$('#ui-right').css('display', 'flex');
 			}
 		}
 
 		if (this.hidePaused == true) {
-			document.getElementById('pause').style.display = 'none';
+			$('#pause').hide();
 		} else {
-			document.getElementById('pause').style.display = 'block';
+			$('#pause').show();
 		}
 	}
 	/**
@@ -141,7 +141,7 @@ class HTMLToScene {
 	 *
 	 * @param  {...any} args
 	 */
-	//TODO Test how it works themes. Might have to store the previous state.
+	//TODO Test how it works with themes. Might have to store the previous state.
 	static restoreUI(...args) {
 		console.log('HTML to Scene | Restoring FoundryVTT features...');
 
@@ -150,14 +150,12 @@ class HTMLToScene {
 		if (iframeNode != null) document.body.removeChild(iframeNode);
 		iframeNode = null; //Deleting iframe reference.
 
-		//TODO Look to replace document.getElementById for jQuery selectors for increased readability.
 		//Restoring FoundryVTT's UI, this might not work with UI modifications.
-		document.getElementById('ui-left').style.display = 'flex';
-		document.getElementById('ui-bottom').style.display = 'flex';
-		document.getElementById('ui-top').style.display = 'inline-block';
-		document.getElementById('ui-right').style.display = 'flex';
-		document.getElementById('ui-top').style.marginLeft = '-90px'; //Default FoundryVTT value
-		document.getElementById('pause').style.display = 'block';
+		$('#ui-left').css('display', 'flex');
+		$('#ui-bottom').css('display', 'flex');
+		$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' }); //Default FoundryVTT value
+		$('#ui-right').css('display', 'flex');
+		$('#pause').show();
 	}
 
 	/**
@@ -208,9 +206,10 @@ class HTMLToScene {
 				'htmltoscene.title'
 			)}</a>`
 		);
-		ambTab.after(await this.getSceneHtml(this.getSceneTemplateData(data)));
-		//TODO Obtain this value from the scene flags, not from the class. Related bug: Looking to other scene that uses this module, will have the value of the actual one.
-		$('#filepickerinput').val(this.fileLoc);
+		let sceneTemplateData = await this.getSceneTemplateData(data);
+		ambTab.after(await this.getSceneHtml(sceneTemplateData));
+		//TODO Obtain this value from the scene flags. Related bug: Opening two scene configurations, will delete the first one's contents. (Better solution than the first one used)
+		$('#filepickerinput').val(sceneTemplateData.fileLoc);
 	}
 
 	/**
