@@ -46,6 +46,7 @@ Also, for your own safety, try to not log in to other websites using this module
 
 ![A game running inside FoundryVTT](exampleimage001.png)
 ![A website FoundryVTT](exampleimage002.png)
+![StackOverflowError](exampleimage003.png)
 
 ## Thanks
 
