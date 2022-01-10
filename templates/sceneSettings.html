@@ -44,6 +44,16 @@
 		<input type="checkbox" name="flags.htmltoscene.hidePaused" data-dtype="Boolean" {{#if hidePaused}} checked{{/if}}>
 		<p class="notes">{{ localize "htmltoscene.hidePaused.desc" }}</p>
 	</div>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.hideSmallTime.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.hideSmallTime" data-dtype="Boolean" {{#if hideSmallTime}} checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.hideSmallTime.desc" }}</p>
+	</div>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.hideGMScreen.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.hideGMScreen" data-dtype="Boolean" {{#if hideGMScreen}} checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.hideGMScreen.desc" }}</p>
+	</div>
 	<hr>
 	<p class="notes" style="font-style:italic;">{{ localize "htmltoscene.rememberjsexecution" }}</p>
 </div>

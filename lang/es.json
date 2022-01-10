@@ -34,6 +34,10 @@
 			"name": "Esconde 'Juego en Pausa'",
 			"desc": "Esconde 'Juego en Pausa' haciendo que no se muestre sobre el fichero HTML cargado si el juego está pausado."
 		},
+		"hideSmallTime": {
+			"name": "Esconder el modulo 'SmallTime'",
+			"desc": "Esconde el reloj de SmallTime (en el acaso de estar activado)."
+		},
 		"rememberjsexecution": "Por favor, recuerde de introducir solo ficheros en los que confie plenamente. Puedes estar permitiendo ejecución de javascript no solicitado en tu sistema. Y eso es malo."
 	}
 }

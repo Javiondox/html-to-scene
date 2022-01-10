@@ -24,11 +24,16 @@ class HTMLToScene {
 		return false;
 	}
 
+	static get disableSmallTime() {
+		return false;
+	}
+
 	/** @type {Object} */
 	static get flags() {
 		return canvas.scene.data.flags;
 	}
 
+	/** Getters */
 	static get enabled() {
 		return Boolean(this.flags.htmltoscene?.enable);
 	}
@@ -56,8 +61,14 @@ class HTMLToScene {
 		);
 	}
 
+	static get hideSmallTime() {
+		return Boolean(
+			this.flags.htmltoscene?.hideSmallTime ?? this.disableSmallTime
+		);
+	}
+
 	static init(...args) {
-		//CONFIG.debug.hooks = true
+		//CONFIG.debug.hooks = true;
 		loadTemplates(['modules/html-to-scene/templates/sceneSettings.html']);
 		console.log('HTML to Scene | Loaded');
 	}
@@ -129,6 +140,8 @@ class HTMLToScene {
 		} else {
 			$('#pause').show();
 		}
+
+		this.updateSmallTime();
 	}
 	/**
 	 * Shows back FoundryVTT UI elements.
@@ -150,6 +163,7 @@ class HTMLToScene {
 		$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' }); //Default FoundryVTT value
 		$('#ui-right').css('display', 'flex');
 		$('#pause').show();
+		$('#smalltime-app').show();
 	}
 
 	/**
@@ -251,6 +265,16 @@ class HTMLToScene {
 			settings
 		);
 	}
+
+	/* Module compatibility hooks */
+
+	static updateSmallTime() {
+		if (this.hideSmallTime == true && this.enabled) {
+			$('#smalltime-app').hide();
+		} else {
+			$('#smalltime-app').show();
+		}
+	}
 }
 
 // Hooks section
@@ -263,3 +287,4 @@ Hooks.on('renderSceneConfig', (...args) =>
 Hooks.on('canvasReady', (...args) => HTMLToScene.replace(...args));
 Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
 Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
+Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());

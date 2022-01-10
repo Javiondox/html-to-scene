@@ -31,8 +31,12 @@
 			"tip": "You might want to have other scene visible to gain back normal FoundryVTT's controls. (If not, you can always disable this module for the current scene)."
 		},
 		"hidePaused": {
-			"name": "Hide 'Game Paused'",
-			"desc": "Hide 'Game Paused' over the HTML file if the game is paused."
+			"name": "Hides 'Game Paused'",
+			"desc": "Hides 'Game Paused' over the HTML file if the game is paused."
+		},
+		"hideSmallTime": {
+			"name": "Hides the module 'SmallTime'",
+			"desc": "Hides SmallTime's clock (if active)."
 		},
 		"rememberjsexecution": "Please, remember to input only files that you fully trust. You might be allowing unwanted javascript execution in your system. And that is bad."
 	}
