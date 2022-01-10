@@ -14,12 +14,19 @@ class HTMLToScene {
 	static get minimalUI() {
 		return true;
 	}
+
+	static get forceSceneChanger() {
+		return true;
+	}
+
 	static get respectRightControls() {
 		return true;
 	}
+
 	static get disableRightControls() {
 		return false;
 	}
+
 	static get disableGamePausedStatus() {
 		return false;
 	}
@@ -45,16 +52,23 @@ class HTMLToScene {
 	static get minUI() {
 		return Boolean(this.flags.htmltoscene?.minUI ?? this.minimalUI);
 	}
+
+	static get keepTop() {
+		return Boolean(this.flags.htmltoscene?.keepTop ?? this.forceSceneChanger);
+	}
+
 	static get spaceRight() {
 		return Boolean(
 			this.flags.htmltoscene?.spaceRight ?? this.respectRightControls
 		);
 	}
+
 	static get rightDisabled() {
 		return Boolean(
 			this.flags.htmltoscene?.rightDisabled ?? this.disableRightControls
 		);
 	}
+
 	static get hidePaused() {
 		return Boolean(
 			this.flags.htmltoscene?.hidePaused ?? this.disableGamePausedStatus
@@ -122,7 +136,7 @@ class HTMLToScene {
 				$('#ui-right').css('display', 'flex');
 			} else {
 				$('#ui-right').hide();
-				$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' }); //Small fix to the top styling to keep it in the same place
+				$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' }); //Small fix to the top styling to keep it in the same place (As anvil's anvil disappears)
 			}
 		} else {
 			$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' });
@@ -140,6 +154,9 @@ class HTMLToScene {
 		} else {
 			$('#pause').show();
 		}
+
+		if (this.keepTop == true)
+			$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' });
 
 		this.updateSmallTime();
 	}

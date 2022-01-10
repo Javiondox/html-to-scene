@@ -20,6 +20,10 @@
 			"name": "Minimal UI",
 			"desc": "Removes unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
 		},
+		"keepTop": {
+			"name": "Keep Scene Changer",
+			"desc": "Maintains the Scene Changer at the top of the screen in any case."
+		},
 		"spaceRight": {
 			"name": "Respect right controls",
 			"desc": "Adds an empty space under the right controls.",

@@ -20,6 +20,10 @@
 			"name": "Interfaz mínima",
 			"desc": "Elimina elementos innecesarios de la interfaz de FoundryVTT mientras un fichero HTML está siendo mostrado."
 		},
+		"keepTop": {
+			"name": "Mantener el cambiador de escenas",
+			"desc": "Mantiene el cambiador de escenas en la parte superior de la pantalla en cualquier caso."
+		},
 		"spaceRight": {
 			"name": "Respeta los controles de la derecha",
 			"desc": "Añade un espacio en blanco bajo los controles de la derecha.",
