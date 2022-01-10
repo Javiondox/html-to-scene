@@ -1,3 +1,7 @@
+/** Global Vars */
+
+let diceSoNiceInstalled = false;
+
 /**
  *  HTML To Scene static class
  *
@@ -114,10 +118,17 @@ class HTMLToScene {
 
 		var pauseNode = document.getElementById('pause');
 
-		document.body.insertBefore(
-			this.createIframe(canvasHeight, canvasWidth),
-			pauseNode
-		);
+		if (!diceSoNiceInstalled) {
+			document.body.insertBefore(
+				this.createIframe(canvasHeight, canvasWidth),
+				pauseNode
+			);
+		} else {
+			document.body.insertBefore(
+				this.createIframe(canvasHeight, canvasWidth),
+				document.getElementById('dice-box-canvas')
+			);
+		}
 	}
 
 	/**
@@ -274,7 +285,6 @@ class HTMLToScene {
 	 * Fills the template with correct values.
 	 *
 	 * @param {HTMLToSceneSettings} settings
-	 * @returns
 	 */
 	static async getSceneHtml(settings) {
 		return await renderTemplate(
@@ -285,6 +295,20 @@ class HTMLToScene {
 
 	/* Module compatibility hooks */
 
+	/**
+	 * Changes iframe position to one before the nodeID given.
+	 * @param {HTML node ID attribute} nodeID
+	 */
+	static swapPosition(nodeID) {
+		//Checking if the iframe still exists, and deleting it in that case.
+		var iframeNode = document.getElementById('htmltoiframe');
+		var otherNode = document.getElementById(nodeID);
+		iframeNode.parentNode.insertBefore(iframeNode, otherNode);
+	}
+
+	/**
+	 * Updates SmallTime with module preferences when loaded
+	 */
 	static updateSmallTime() {
 		if (this.hideSmallTime == true && this.enabled) {
 			$('#smalltime-app').hide();
@@ -305,3 +329,8 @@ Hooks.on('canvasReady', (...args) => HTMLToScene.replace(...args));
 Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
 Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
 Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());
+
+Hooks.on('diceSoNiceReady', () => {
+	HTMLToScene.swapPosition('dice-box-canvas');
+	diceSoNiceInstalled = true;
+});
