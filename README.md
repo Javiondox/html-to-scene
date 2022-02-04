@@ -10,17 +10,19 @@ There, you will be able to change how the module works. By default, if you enabl
 
 ![HTMLToScene Options](moduleoptions.png)
 
-1 - Allows the module to create a view on the current scene.
+1 - Removes all the UI at the left of the screen, leaving the right controls intact.
 
-2 - Allows you to indicate the module a path to the HTML file you want to open. (You have to a relative path from the Data folder to the HTML file)
+2 - Keeps the scene changer (the ui on the top that you use to switch between scenes) active at ALL times.
 
-3 - Removes all the UI at the left of the screen, leaving the right controls intact. (By default)
+3 - Leaves a space under the sidebar (Used if you don't want to render the HTML file under that)
 
-4 - Leaves a space under the right controls (Used if you don't want to render the HTML file under that)
+4 - Removes sidebar and, if the 1st option is enabled, displays back the scene changer at the top (If that bothers you, you can make it smaller by clicking on the arrow).
 
-5 - Removes the right controls and, if the 3rd option is enabled, displays back the scene changer at the top (That you can make smaller clicking on the arrow).
+5 - Hides 'Game Paused'.
 
-6 - Hides 'Game Paused'.
+6 - Tries to hide [unsoluble's SmallTime](https://github.com/unsoluble/smalltime) clock from the screen.
+
+7 - Hides FoundryVTT's board in an attempt to get some performace back by not rendering the canvas.
 
 ## Limitations and warnings
 
