@@ -1,47 +1,47 @@
 {
-  "name": "html-to-scene",
-  "title": "HTML to Scene",
-  "description": "A hacky module that allows its user to replace scene contents into a local html file or external website with the power of iframes.",
-  "author": "Javiondox",
-  "authors": [
-    {
-      "name": "Javiondox",
-      "url": "https://github.com/javiondox",
-      "discord": "javiondox#6609"
-    }
-  ],
-  "url": "https://github.com/Javiondox/html-to-scene",
-  "readme": "https://github.com/Javiondox/html-to-scene/blob/master/readme.md",
-  "bugs": "https://github.com/Javiondox/html-to-scene/issues",
-  "changelog": "https://github.com/Javiondox/html-to-scene/releases",
-  "flags": {},
-  "version": "1.0.12",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
-  "scripts": [
-    "scripts/core.js"
-  ],
-  "esmodules": [],
-  "styles": [],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    },
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
-    }
-  ],
-  "packs": [],
-  "system": [],
-  "dependencies": [],
-  "socket": false,
-  "manifest": "https://github.com/Javiondox/html-to-scene/releases/latest/download/module.json",
-  "download": "https://github.com/Javiondox/html-to-scene/releases/latest/download/html-to-scene.zip",
-  "protected": false,
-  "coreTranslation": false,
-  "library": false
+	"name": "html-to-scene",
+	"title": "HTML to Scene",
+	"description": "A hacky module that allows its user to replace scene contents into a local html file or external website with the power of iframes.",
+	"author": "Javiondox",
+	"authors": [
+		{
+			"name": "Javiondox",
+			"url": "https://github.com/javiondox",
+			"discord": "javiondox#6609"
+		}
+	],
+	"url": "https://github.com/Javiondox/html-to-scene",
+	"readme": "https://github.com/Javiondox/html-to-scene/blob/master/readme.md",
+	"bugs": "https://github.com/Javiondox/html-to-scene/issues",
+	"changelog": "https://github.com/Javiondox/html-to-scene/releases",
+	"flags": {},
+	"version": "1.0.13",
+	"minimumCoreVersion": "9",
+	"compatibleCoreVersion": "9",
+	"scripts": [
+		"scripts/core.js"
+	],
+	"esmodules": [],
+	"styles": [],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		},
+		{
+			"lang": "es",
+			"name": "Español",
+			"path": "lang/es.json"
+		}
+	],
+	"packs": [],
+	"system": [],
+	"dependencies": [],
+	"socket": false,
+	"manifest": "https://github.com/Javiondox/html-to-scene/releases/latest/download/module.json",
+	"download": "https://github.com/Javiondox/html-to-scene/releases/latest/download/html-to-scene.zip",
+	"protected": false,
+	"coreTranslation": false,
+	"library": false
 }

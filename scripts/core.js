@@ -163,7 +163,10 @@ class HTMLToScene {
 		if (this.hidePaused == true) {
 			$('#pause').hide();
 		} else {
-			$('#pause').show();
+			if (game.paused) {
+				//To prevent the game paused indicator to reappear on other scene.
+				$('#pause').show();
+			}
 		}
 
 		if (this.keepTop == true)
@@ -190,7 +193,10 @@ class HTMLToScene {
 		$('#ui-bottom').css('display', 'flex');
 		$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' }); //Default FoundryVTT value
 		$('#ui-right').css('display', 'flex');
-		$('#pause').show();
+		if (game.paused) {
+			//To prevent the game paused indicator to reappear on other scene.
+			$('#pause').show();
+		}
 		$('#smalltime-app').show();
 	}
 
@@ -259,6 +265,19 @@ class HTMLToScene {
 		);
 		let sceneTemplateData = await this.getSceneTemplateData(data);
 		ambTab.after(await this.getSceneHtml(sceneTemplateData));
+
+		//Filepicker
+		/*$('#html-picker').click(() => {
+			const fp = new FilePicker({
+				type: 'any',
+				button: 'html-picker',
+				title: 'Select a HTML file',
+				callback: (url) => {
+					console.log(url);
+				},
+			});
+			fp.browse();
+		});*/
 	}
 
 	/**
