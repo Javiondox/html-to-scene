@@ -39,6 +39,10 @@ class HTMLToScene {
 		return false;
 	}
 
+	static get disableBoard() {
+		return false;
+	}
+
 	/** @type {Object} */
 	static get flags() {
 		return canvas.scene.data.flags;
@@ -83,6 +87,10 @@ class HTMLToScene {
 		return Boolean(
 			this.flags.htmltoscene?.hideSmallTime ?? this.disableSmallTime
 		);
+	}
+
+	static get hideBoard() {
+		return Boolean(this.flags.htmltoscene?.hideBoard ?? this.disableBoard);
 	}
 
 	static init(...args) {
@@ -172,6 +180,12 @@ class HTMLToScene {
 		if (this.keepTop == true)
 			$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' });
 
+		if (this.hideBoard == true) {
+			$('#board').hide();
+		} else {
+			$('#board').show();
+		}
+
 		this.updateSmallTime();
 	}
 	/**
@@ -197,6 +211,7 @@ class HTMLToScene {
 			//To prevent the game paused indicator to reappear on other scene.
 			$('#pause').show();
 		}
+		$('#board').show();
 		$('#smalltime-app').show();
 	}
 
@@ -220,6 +235,20 @@ class HTMLToScene {
 	static updateWidth() {
 		if (this.enabled && this.spaceRight) {
 			$('#htmltoiframe').width(this.calcSpacedWidth());
+		}
+	}
+
+	/**
+	 * Updates paused status after load.
+	 */
+	static pauseControl() {
+		if (this.enabled) {
+			if (game.paused) {
+				//To prevent the game paused indicator to reappear on other scene.
+				$('#pause').show();
+			} else {
+				$('#pause').hide();
+			}
 		}
 	}
 
@@ -347,7 +376,9 @@ Hooks.on('renderSceneConfig', (...args) =>
 Hooks.on('canvasReady', (...args) => HTMLToScene.replace(...args));
 Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
 Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
+Hooks.on('collapseSidebar', () => HTMLToScene.updateWidth());
 Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());
+Hooks.on('pauseGame', () => HTMLToScene.pauseControl());
 
 Hooks.on('diceSoNiceReady', () => {
 	HTMLToScene.swapPosition('dice-box-canvas');

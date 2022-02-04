@@ -1,15 +1,14 @@
 {
 	"htmltoscene": {
 		"title": "HTML To Scene",
-		"description": "Load a local html file on this scene.",
-		"mainsettings": "Main settings",
-		"uisettings": "UI settings",
-		"miscsettings": "Miscellaneous settings",
-		"recommendationtip": "Recomendation: ",
+		"uisettings": "UI Settings",
+		"miscsettings": "Miscellaneous Settings",
+		"advsettings": "Advanced Settings",
+		"recommendationtip": "Protip: ",
 		"warningtip":"WARNING: ",
 		"enable": {
 			"name": "Enable",
-			"desc": "Enable HTML To Scene on this scene."
+			"desc": "Enables HTML To Scene on this scene."
 		},
 		"fileLoc": {
 			"name": "Select HTML file",
@@ -25,22 +24,27 @@
 			"desc": "Maintains the Scene Changer at the top of the screen in any case."
 		},
 		"spaceRight": {
-			"name": "Respect right controls",
-			"desc": "Adds an empty space under the right controls.",
+			"name": "Respect sidebar's space",
+			"desc": "Adds an empty space under the sidebar.",
 			"tip": "You can change the color of the canvas' background color to affect the color behind the controls."
 		},
 		"rightDisabled": {
-			"name": "Disable right controls",
-			"desc": "Removes the right controls from the UI, enabling back the scene changer on the top. (Ideal if your group communicates via voice chat or doesn't need to throw dice).",
+			"name": "Disable sidebar",
+			"desc": "Removes the sidebar from the UI, enabling back the scene changer on the top. (Ideal if your group communicates via voice chat or doesn't need to throw dice).",
 			"tip": "You might want to have other scene visible to gain back normal FoundryVTT's controls. (If not, you can always disable this module for the current scene)."
 		},
 		"hidePaused": {
-			"name": "Hides 'Game Paused'",
+			"name": "Hide 'Game Paused'",
 			"desc": "Hides 'Game Paused' over the HTML file if the game is paused."
 		},
 		"hideSmallTime": {
-			"name": "Hides the module 'SmallTime'",
+			"name": "Hide 'SmallTime'",
 			"desc": "Hides SmallTime's clock (if active)."
+		},
+		"hideBoard": {
+			"name": "Hide FoundryVTT's board",
+			"desc": "Hides the board for a noticeable FPS boost. (You won't render the canvas).",
+			"tip": "Other modules that may depend on the board might malfunction, check your browser's console."
 		},
 		"rememberjsexecution": "Please, remember to input only files that you fully trust. You might be allowing unwanted javascript execution in your system. And that is bad."
 	}

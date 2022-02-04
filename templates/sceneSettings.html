@@ -1,7 +1,4 @@
 <div class="tab" data-tab="htmltoscene">
-	<hr>
-	<label style="text-align:center;font-weight: bold;">{{ localize "htmltoscene.mainsettings" }}</label>
-	<hr>
 	<div class="form-group">
 		<label>{{ localize "htmltoscene.enable.name" }}</label>
 		<input type="checkbox" name="flags.htmltoscene.enable" data-dtype="Boolean" {{#if enable}} checked{{/if}}>
@@ -20,8 +17,7 @@
 		<p class="notes">{{ localize "htmltoscene.fileLoc.hint"}}</p>
 		<p class="notes">{{ localize "htmltoscene.recommendationtip" }}{{ localize "htmltoscene.fileLoc.tip" }}</p>
 	</div>
-	<hr>
-	<label style="text-align:center;font-weight: bold;">{{ localize "htmltoscene.uisettings" }}</label>
+	<p style="text-align:center;font-weight: bold;padding-right:30px">{{ localize "htmltoscene.uisettings" }}</p>
 	<hr>
 	<div class="form-group">
 		<label>{{ localize "htmltoscene.minUI.name" }}</label>
@@ -48,8 +44,7 @@
 		<p class="notes"><b>{{ localize "htmltoscene.warningtip" }}</b>{{ localize "htmltoscene.rightDisabled.tip" }}
 		</p>
 	</div>
-	<hr>
-	<label style="text-align:center;font-weight: bold;">{{ localize "htmltoscene.miscsettings" }}</label>
+	<p style="text-align:center;font-weight: bold;padding-right:30px">{{ localize "htmltoscene.miscsettings" }}</p>
 	<hr>
 	<div class="form-group">
 		<label>{{ localize "htmltoscene.hidePaused.name" }}</label>
@@ -63,6 +58,15 @@
 			checked{{/if}}>
 		<p class="notes">{{ localize "htmltoscene.hideSmallTime.desc" }}</p>
 	</div>
+	<p style="text-align:center;font-weight: bold;padding-right:30px">{{ localize "htmltoscene.advsettings" }}</p>
 	<hr>
-	<p class="notes" style="font-style:italic;">{{ localize "htmltoscene.rememberjsexecution" }}</p>
+	<div class="form-group">
+		<label>{{ localize "htmltoscene.hideBoard.name" }}</label>
+		<input type="checkbox" name="flags.htmltoscene.hideBoard" data-dtype="Boolean" {{#if hideBoard}}
+			checked{{/if}}>
+		<p class="notes">{{ localize "htmltoscene.hideBoard.desc" }}</p>
+		<p class="notes"><b>{{ localize "htmltoscene.warningtip" }}</b>{{ localize "htmltoscene.hideBoard.tip" }}
+		</p>
+	</div>
+	<p class="notes" style="font-style:italic;color:brown">{{ localize "htmltoscene.rememberjsexecution" }}</p>
 </div>
