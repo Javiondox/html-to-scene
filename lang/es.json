@@ -48,7 +48,7 @@
 		},
 		"passData": {
 			"name": "Activa ayudas para la intercomunicación",
-			"desc": "Pone en uso variables inactivas para ayudar a realizar la intercomunicación entre el iframe y FoundryVTT. <a href='https://github.com/Javiondox/html-to-scene/wiki/Two-way-communication-helpers'>Ver la wiki para una mejor explicación</a> (Inglés).",
+			"desc": "Pone en uso variables inactivas para ayudar a realizar la intercomunicación entre el iframe y FoundryVTT. Ver la wiki de GitHub para una mejor explicación (Inglés).",
 			"tip": "Para dar uso completo a esto, tendrás que tener conocimientos de programación y de macros."
 		},
 		"dataUpdateRate": {
