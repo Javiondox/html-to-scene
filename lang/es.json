@@ -12,8 +12,8 @@
 		},
 		"fileLoc": {
 			"name": "Selecciona Un Fichero HTML",
-			"hint": "Puedes seleccionar cualquier fichero HTML almacenado en la carpeta data de tu FoundryVTT.",
-			"tip": "Hazlo en una escena en blanco para aumentar el rendimiento. También puedes introducir algunas páginas web que permitan iframes"
+			"hint": "Puedes seleccionar cualquier fichero HTML almacenado en la carpeta data de tu FoundryVTT utilizando una ruta relativa.",
+			"tip": "Hazlo en una escena en blanco para aumentar el rendimiento. También puedes introducir algunas páginas web que permitan iframes."
 		},
 		"minUI": {
 			"name": "Interfaz Mínima",
@@ -39,8 +39,7 @@
 				"bothplusfps": "Permite la barra de acceso rápido, las cámaras y el indicador de fotogramas por segundo",
 				"fpsonly": "Permite únicamente el indicador de fotogramas por segundo de FoundryVTT"
 			},
-			"desc": "Te permite seleccionar como quieres que los controles inferiores sean mostrados.",
-			"tip": "Puedes usar \"Permite las cámaras y el indicador de fotogramas por segundo\" mientras no estas usando ninguna cámara para cambiar la posición del indicador de fotogramas por segundo."
+			"desc": "Te permite seleccionar como quieres que los controles inferiores sean mostrados."
 		},
 		"spaceRight": {
 			"name": "Respeta El Espacio De La Barra Lateral",

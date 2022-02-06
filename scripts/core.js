@@ -446,8 +446,10 @@ class HTMLToScene {
 		//Checking if the iframe still exists, and deleting it in that case.
 		//Doing it visually doesn't cause a iFrame reload.
 		var otherNode = document.getElementById(nodeID);
-		let otherZIndex = getComputedStyle(otherNode).getPropertyValue('z-index');
-		getComputedStyle(_iFrameNode).setProperty('z-index', otherZIndex - 1);
+		if (otherNode != null) {
+			let otherZIndex = getComputedStyle(otherNode).getPropertyValue('z-index');
+			getComputedStyle(_iFrameNode).setProperty('z-index', otherZIndex - 1);
+		}
 	}
 
 	/**
@@ -633,7 +635,6 @@ class HTMLToScene {
 				updateMs = -1;
 				break;
 		}
-		console.log(moduleprefix + this.dataUpdateRate + ' ' + updateMs);
 
 		//Copying references
 		class FoundryVTT {
