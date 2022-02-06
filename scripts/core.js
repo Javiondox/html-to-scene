@@ -1,6 +1,13 @@
 /** Global Vars */
 
-let diceSoNiceInstalled = false;
+const moduleprefix = 'HTML to Scene | ';
+const moduleid = 'html-to-scene';
+const moduleapp = 'html-to-scene';
+var FoundryVTTAccess;
+var HTMLAccess;
+let _diceSoNiceInstalled = false;
+let _updateInterval;
+let _iFrameNode;
 
 /**
  *  HTML To Scene static class
@@ -41,6 +48,15 @@ class HTMLToScene {
 
 	static get disableBoard() {
 		return false;
+	}
+
+	static get assistedBidirectionalAccess() {
+		return false;
+	}
+
+	/** @type {Int} */
+	static get allowedRateOfAccess() {
+		return 0;
 	}
 
 	/** @type {Object} */
@@ -93,10 +109,22 @@ class HTMLToScene {
 		return Boolean(this.flags.htmltoscene?.hideBoard ?? this.disableBoard);
 	}
 
+	static get passData() {
+		return Boolean(
+			this.flags.htmltoscene?.passData ?? this.assistedBidirectionalAccess
+		);
+	}
+
+	static get dataUpdateRate() {
+		return Number(
+			this.flags.htmltoscene?.dataUpdateRate ?? this.allowedRateOfAccess
+		);
+	}
+
 	static init(...args) {
 		//CONFIG.debug.hooks = true;
 		loadTemplates(['modules/html-to-scene/templates/sceneSettings.html']);
-		console.log('HTML to Scene | Loaded');
+		console.log(moduleprefix + 'Loaded');
 	}
 
 	static replace(...args) {
@@ -104,11 +132,11 @@ class HTMLToScene {
 			this.restoreUI();
 			return;
 		}
+		clearInterval(_updateInterval); //Stoping the update interval.
 		this.setUI(); //Sets FoundryVTT's UI as needed.
 
 		//Deleting previous iframe
-		var iframeNode = document.getElementById('htmltoiframe');
-		if (iframeNode != null) document.body.removeChild(iframeNode);
+		if (_iFrameNode != null) document.body.removeChild(_iFrameNode);
 
 		var canvasHeight = '100%';
 		var canvasWidth;
@@ -120,22 +148,26 @@ class HTMLToScene {
 		}
 
 		console.log(
-			'HTML to Scene | Replacing canvas with responsive height and' +
+			moduleprefix +
+				'Replacing canvas with responsive height and ' +
 				(canvasWidth == '100%' ? 'width' : 'non responsive width')
 		);
 
-		var pauseNode = document.getElementById('pause');
-
-		if (!diceSoNiceInstalled) {
+		//Checking for diceSoNice, then putting the iframe before if that is the case.
+		if (!_diceSoNiceInstalled) {
 			document.body.insertBefore(
 				this.createIframe(canvasHeight, canvasWidth),
-				pauseNode
+				document.getElementById('pause')
 			);
 		} else {
 			document.body.insertBefore(
 				this.createIframe(canvasHeight, canvasWidth),
 				document.getElementById('dice-box-canvas')
 			);
+		}
+
+		if (this.passData) {
+			this.passDataToIFrame(); //Adds FoundryVTT variables to the iframe
 		}
 	}
 
@@ -195,12 +227,14 @@ class HTMLToScene {
 	 */
 	//TODO Test how it works with themes. Might have to store the previous state.
 	static restoreUI(...args) {
-		console.log('HTML to Scene | Restoring FoundryVTT features...');
+		console.log(moduleprefix + 'Restoring FoundryVTT features...');
 
 		//Checking if the iframe still exists, and deleting it in that case.
-		var iframeNode = document.getElementById('htmltoiframe');
-		if (iframeNode != null) document.body.removeChild(iframeNode);
-		iframeNode = null; //Deleting iframe reference.
+		if (_iFrameNode != null) document.body.removeChild(_iFrameNode);
+		_iFrameNode = null; //Deleting iframe reference.
+		//Empties references
+		FoundryVTTAccess = null;
+		HTMLAccess = null;
 
 		//Restoring FoundryVTT's UI, this might not work with UI modifications.
 		$('#ui-left').css('display', 'flex');
@@ -213,6 +247,8 @@ class HTMLToScene {
 		}
 		$('#board').show();
 		$('#smalltime-app').show();
+
+		clearInterval(_updateInterval); //Stoping the interval
 	}
 
 	/**
@@ -262,7 +298,7 @@ class HTMLToScene {
 	static createIframe(height, width) {
 		var ifrm = document.createElement('iframe');
 		ifrm.setAttribute('src', this.fileLoc);
-		ifrm.setAttribute('id', 'htmltoiframe');
+		ifrm.setAttribute('id', moduleapp);
 		ifrm.setAttribute('frameBorder', '0');
 		ifrm.width = width;
 		ifrm.height = height;
@@ -270,8 +306,8 @@ class HTMLToScene {
 		ifrm.style.left = 0;
 		ifrm.style.top = 0;
 		ifrm.frameborder = 0;
-
-		return ifrm;
+		_iFrameNode = ifrm;
+		return _iFrameNode;
 	}
 
 	/**
@@ -288,7 +324,7 @@ class HTMLToScene {
 		const ambTab = html.find('.tab[data-tab=ambience]');
 
 		ambItem.after(
-			`<a class="item" data-tab="htmltoscene"><i class="fas fa-html5"></i> ${game.i18n.localize(
+			`<a class="item" data-tab="htmltoscene"><i class="fas fa-file-code"></i> ${game.i18n.localize(
 				'htmltoscene.title'
 			)}</a>`
 		);
@@ -349,9 +385,10 @@ class HTMLToScene {
 	 */
 	static swapPosition(nodeID) {
 		//Checking if the iframe still exists, and deleting it in that case.
-		var iframeNode = document.getElementById('htmltoiframe');
+		//Doing it visually doesn't cause a iFrame reload.
 		var otherNode = document.getElementById(nodeID);
-		iframeNode.parentNode.insertBefore(iframeNode, otherNode);
+		let otherZIndex = getComputedStyle(otherNode).getPropertyValue('z-index');
+		getComputedStyle(_iFrameNode).setProperty('z-index', otherZIndex - 1);
 	}
 
 	/**
@@ -364,7 +401,350 @@ class HTMLToScene {
 			$('#smalltime-app').show();
 		}
 	}
+
+	/**
+	 * Makes syncing an external HTML file and FoundryVTT somewhat easier.
+	 * You could implement this in a cheaper way doing it in a barebones way doing the references yourself.
+	 * But in some cases, injecting an object to an iframe could be useful. Ex: https://docs.godotengine.org/en/stable/classes/class_javascriptobject.html#class-javascriptobject
+	 *
+	 * This essentially uses two global unused objects: FoundryVTTAccess and HTMLAccess
+	 * HTMLAccess is intended to for within Foundry, enabling direct modification of the iFrame (using <iframe>.contentWindow)
+	 * Similarly, FoundryVTTAccess is intended to use in an HTML file, enabling you to use the full Foundry API, the 'game' variable and some helpers from the HTML file.
+	 * FoundryVTTAccess doesn't interface everything, neither tries to. It only interfaces things that aren't canvas related (because that will be replaced).
+	 *
+	 * Also, it handles the update rate of FoundryVTTAccess. (Doing it in the bare-bones way would be equivalent to using it in real-time, and you wouldn't have to use a promise in your file)
+	 *
+	 * The main idea behind this is to lower the barrier to entry. Being able to be used with knowledge, and basic html/css/js, but in the right hands it could be very powerful.
+	 */
+	static passDataToIFrame() {
+		//Throwing some foundry variables to the iframe (LONG)
+		console.log(moduleprefix + 'Passing FoundryVTT variables...');
+
+		//Setting update rate
+		let updateMs;
+		switch (this.dataUpdateRate) {
+			case 1:
+				updateMs = 5000;
+				break;
+			case 2:
+				updateMs = 1000;
+				break;
+			case 3:
+				updateMs = 500;
+				break;
+			case 4:
+				updateMs = 250;
+				break;
+			case 5:
+				updateMs = 10; //All web browsers have a capped minimum to not overload people's computers. Just in case, I left it at 10ms. No so much real-time for you!
+				break;
+			default:
+				updateMs = -1;
+				break;
+		}
+		console.log(moduleprefix + this.dataUpdateRate + ' ' + updateMs);
+
+		//Copying references
+		class FoundryVTT {
+			//Update rate (Helper)
+			static get updateRate() {
+				return updateMs;
+			}
+
+			//Default game
+			static get game() {
+				return game;
+			}
+			// Document
+			static get Document() {
+				return Document;
+			}
+			static get ClientDatabaseBackend() {
+				return ClientDatabaseBackend;
+			}
+			static get DocumentCollection() {
+				return DocumentCollection;
+			}
+			static get WorldCollection() {
+				return WorldCollection;
+			}
+			static get CompendiumCollection() {
+				return CompendiumCollection;
+			}
+			// Actor
+			static get Actor() {
+				return Actor;
+			}
+			static get Actors() {
+				return Actors;
+			}
+			static get ActorSheet() {
+				return ActorSheet;
+			}
+			static get ActorDirectory() {
+				return ActorDirectory;
+			}
+			// Chat
+			static get ChatMessage() {
+				return ChatMessage;
+			}
+			static get Messages() {
+				return Messages;
+			}
+			static get ChatLog() {
+				return ChatLog;
+			}
+			// Combat Encounter
+			static get Combat() {
+				return Combat;
+			}
+			static get CombatEncounters() {
+				return CombatEncounters;
+			}
+			static get CombatTracker() {
+				return CombatTracker;
+			}
+			// Item
+			static get Item() {
+				return Item;
+			}
+			static get Items() {
+				return Items;
+			}
+			static get ItemSheet() {
+				return ItemSheet;
+			}
+			static get ItemDirectory() {
+				return ItemDirectory;
+			}
+			// Folder
+			static get Folder() {
+				return Folder;
+			}
+			static get Folders() {
+				return Folders;
+			}
+			static get FolderConfig() {
+				return FolderConfig;
+			}
+			// Journal Entry
+			static get JournalEntry() {
+				return JournalEntry;
+			}
+			static get Journal() {
+				return Journal;
+			}
+			static get JournalSheet() {
+				return JournalSheet;
+			}
+			static get JournalDirectory() {
+				return JournalDirectory;
+			}
+			// Macro
+			static get Macro() {
+				return Macro;
+			}
+			static get Macros() {
+				return Macros;
+			}
+			static get MacroConfig() {
+				return MacroConfig;
+			}
+			static get MacroDirectory() {
+				return MacroDirectory;
+			}
+			// Playlist
+			static get Playlist() {
+				return ChatLog;
+			}
+			static get Playlists() {
+				return Playlists;
+			}
+			static get PlaylistConfig() {
+				return PlaylistConfig;
+			}
+			static get PlaylistDirectory() {
+				return PlaylistDirectory;
+			}
+			// RollTable
+			static get RollTable() {
+				return RollTable;
+			}
+			static get RollTables() {
+				return RollTables;
+			}
+			static get RollTableConfig() {
+				return RollTableConfig;
+			}
+			static get RollTableDirectory() {
+				return RollTableDirectory;
+			}
+			// Scene
+			static get Scene() {
+				return Scene;
+			}
+			static get Scenes() {
+				return Scenes;
+			}
+			static get SceneConfig() {
+				return SceneConfig;
+			}
+			static get SceneDirectory() {
+				return SceneDirectory;
+			}
+			static get SceneNavigation() {
+				return SceneNavigation;
+			}
+			// Setting
+			static get ClientSettings() {
+				return ClientSettings;
+			}
+			static get Settings() {
+				return Settings;
+			}
+			// User
+			static get User() {
+				return User;
+			}
+			static get Users() {
+				return Users;
+			}
+			static get UserConfig() {
+				return UserConfig;
+			}
+			static get PlayerList() {
+				return PlayerList;
+			}
+			//Application Building Blocks
+			static get Application() {
+				return Application;
+			}
+			static get FormApplication() {
+				return FormApplication;
+			}
+			static get DocumentSheet() {
+				return DocumentSheet;
+			}
+			static get Dialog() {
+				return Dialog;
+			}
+			static get ContextMenu() {
+				return ContextMenu;
+			}
+			static get FilePicker() {
+				return FilePicker;
+			}
+			static get Tabs() {
+				return Tabs;
+			}
+			static get TextEditor() {
+				return TextEditor;
+			}
+			static get DragDrop() {
+				return DragDrop;
+			}
+			// Dice Rolling
+			static get Roll() {
+				return Roll;
+			}
+			static get RollTerm() {
+				return RollTerm;
+			}
+			static get MersenneTwister() {
+				return MersenneTwister;
+			}
+			static get DiceTerm() {
+				return DiceTerm;
+			}
+			static get MathTerm() {
+				return MathTerm;
+			}
+			static get NumericTerm() {
+				return NumericTerm;
+			}
+			static get OperatorTerm() {
+				return OperatorTerm;
+			}
+			static get PoolTerm() {
+				return PoolTerm;
+			}
+			static get StringTerm() {
+				return StringTerm;
+			}
+			// Dice Types
+			static get Die() {
+				return Die;
+			}
+			static get Coin() {
+				return Coin;
+			}
+			static get FateDie() {
+				return FateDie;
+			}
+			//Other Major Components
+			static get AudioHelper() {
+				return AudioHelper;
+			}
+			static get ImageHelper() {
+				return ImageHelper;
+			}
+			static get Sound() {
+				return Sound;
+			}
+			static get VideoHelper() {
+				return VideoHelper;
+			}
+			static get Game() {
+				return Game;
+			}
+			static get GameTime() {
+				return GameTime;
+			}
+			static get AVMaster() {
+				return AVMaster;
+			}
+			static get AVClient() {
+				return AVClient;
+			}
+			static get SimplePeerAVClient() {
+				return SimplePeerAVClient;
+			}
+			static get Hooks() {
+				return Hooks;
+			}
+			static get KeyboardManager() {
+				return KeyboardManager;
+			}
+			static get SocketInterface() {
+				return SocketInterface;
+			}
+			//Other
+			static get CONFIG() {
+				return CONFIG;
+			}
+		}
+		//FoundryVTTAccess = FoundryVTT;
+		FoundryVTTAccess = FoundryVTT;
+		_iFrameNode.contentWindow.FoundryVTT = FoundryVTTAccess;
+		HTMLAccess = _iFrameNode.contentWindow.document;
+
+		//Setting the Updates
+		if (updateMs >= 0) {
+			_updateInterval = setInterval(() => {
+				_iFrameNode.contentWindow.FoundryVTT = FoundryVTTAccess;
+			}, updateMs);
+		}
+	}
 }
+
+// Handlebars helpers
+
+Handlebars.registerHelper('ifEquals', function (v1, v2, options) {
+	if (v1 === v2) {
+		return options.fn(this);
+	}
+	return options.inverse(this);
+});
 
 // Hooks section
 
@@ -382,5 +762,5 @@ Hooks.on('pauseGame', () => HTMLToScene.pauseControl());
 
 Hooks.on('diceSoNiceReady', () => {
 	HTMLToScene.swapPosition('dice-box-canvas');
-	diceSoNiceInstalled = true;
+	_diceSoNiceInstalled = true;
 });

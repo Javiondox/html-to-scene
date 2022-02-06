@@ -43,8 +43,26 @@
 		},
 		"hideBoard": {
 			"name": "Esconde el tablero de FoundryVTT",
-			"desc": "Esconde el tablero por un aumento de fotogramas por segundo palpable. (No renderizarás el canvas).",
-			"tip": "Otros modulos que usen el tablero pueden empezar a malfuncionar, comprueba la consola de tu navegador."
+			"desc": "Esconde el tablero por un aumento de rendimiento palpable. (No renderizarás el canvas).",
+			"tip": "Otros modulos que usen el tablero pueden empezar a malfuncionar o hacer nada, comprueba la consola de tu navegador."
+		},
+		"passData": {
+			"name": "Activa ayudas para la intercomunicación",
+			"desc": "Pone en uso variables inactivas para ayudar a realizar la intercomunicación entre el iframe y FoundryVTT. <a href='https://github.com/Javiondox/html-to-scene/wiki/Two-way-communication-helpers'>Ver la wiki para una mejor explicación</a> (Inglés).",
+			"tip": "Para dar uso completo a esto, tendrás que tener conocimientos de programación y de macros."
+		},
+		"dataUpdateRate": {
+			"name": "Tasa de actualización de FoundryVTTAccess",
+			"values": {
+				"default": "No se actualiza. Refrescar para actualizar.",
+				"fivesec": "Una actualización cada 5 segundos.",
+				"onesec": "Una actualización cada segundo.",
+				"halfasec": "Dos actualizaciones por segundo.",
+				"cuarterofasec": "Cuatro actualizaciones por segundo.",
+				"realtime":	"Tiempo real."
+			},
+			"desc": "Cambia la velocidad en la que la variable FoundryVTTAccess se actualiza con información nueva. Utiliza updateRate para sincronizarla con tu iframe.",
+			"tip": "This could affect performace. Depends on the use."
 		},
 		"rememberjsexecution": "Por favor, recuerde de introducir solo ficheros en los que confie plenamente. Puedes estar permitiendo ejecución de javascript no solicitado en tu sistema. Y eso es malo."
 	}
