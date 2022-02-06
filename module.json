@@ -15,14 +15,16 @@
 	"bugs": "https://github.com/Javiondox/html-to-scene/issues",
 	"changelog": "https://github.com/Javiondox/html-to-scene/releases",
 	"flags": {},
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"minimumCoreVersion": "9",
 	"compatibleCoreVersion": "9",
 	"scripts": [
 		"scripts/core.js"
 	],
 	"esmodules": [],
-	"styles": [],
+	"styles": [
+		"css/styleclasses.css"
+	],
 	"languages": [
 		{
 			"lang": "en",

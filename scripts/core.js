@@ -7,7 +7,11 @@ var FoundryVTTAccess;
 var HTMLAccess;
 let _diceSoNiceInstalled = false;
 let _updateInterval;
+let _refreshingInterval;
 let _iFrameNode;
+let _oldBottomStatus = 1;
+let _oldLeftStatus = 6;
+let _lastSceneWasHTML = false;
 
 /**
  *  HTML To Scene static class
@@ -28,6 +32,10 @@ class HTMLToScene {
 
 	static get forceSceneChanger() {
 		return true;
+	}
+
+	static get forcePlayerList() {
+		return false;
 	}
 
 	static get respectRightControls() {
@@ -55,7 +63,15 @@ class HTMLToScene {
 	}
 
 	/** @type {Int} */
+	static get lowerUISettings() {
+		return 0;
+	}
+
 	static get allowedRateOfAccess() {
+		return 0;
+	}
+
+	static get iFrameRefreshingRate() {
 		return 0;
 	}
 
@@ -79,6 +95,12 @@ class HTMLToScene {
 
 	static get keepTop() {
 		return Boolean(this.flags.htmltoscene?.keepTop ?? this.forceSceneChanger);
+	}
+
+	static get keepPlayerList() {
+		return Boolean(
+			this.flags.htmltoscene?.keepPlayerList ?? this.forcePlayerList
+		);
 	}
 
 	static get spaceRight() {
@@ -115,9 +137,21 @@ class HTMLToScene {
 		);
 	}
 
+	static get keepBottomControls() {
+		return Number(
+			this.flags.htmltoscene?.keepBottomControls ?? this.lowerUISettings
+		);
+	}
+
 	static get dataUpdateRate() {
 		return Number(
 			this.flags.htmltoscene?.dataUpdateRate ?? this.allowedRateOfAccess
+		);
+	}
+
+	static get iFrameRefreshRate() {
+		return Number(
+			this.flags.htmltoscene?.iFrameRefreshRate ?? this.iFrameRefreshingRate
 		);
 	}
 
@@ -130,16 +164,18 @@ class HTMLToScene {
 	static replace(...args) {
 		if (!this.enabled) {
 			this.restoreUI();
+			_lastSceneWasHTML = false;
 			return;
 		}
-		clearInterval(_updateInterval); //Stoping the update interval.
+		_lastSceneWasHTML = true;
+		this.stopActiveIntervals();
 		this.setUI(); //Sets FoundryVTT's UI as needed.
 
 		//Deleting previous iframe
 		if (_iFrameNode != null) document.body.removeChild(_iFrameNode);
 
 		var canvasHeight = '100%';
-		var canvasWidth;
+		var canvasWidth = '';
 
 		if (this.spaceRight == true) {
 			canvasWidth = this.calcSpacedWidth() + 'px'; //Non responsive solution, made responsive in the canvasPan hook.
@@ -169,6 +205,12 @@ class HTMLToScene {
 		if (this.passData) {
 			this.passDataToIFrame(); //Adds FoundryVTT variables to the iframe
 		}
+
+		if (this.iFrameRefreshRate > 0) {
+			_refreshingInterval = setInterval(() => {
+				this.refreshIFrame();
+			}, this.iFrameRefreshRate);
+		}
 	}
 
 	/**
@@ -178,20 +220,25 @@ class HTMLToScene {
 	 */
 	static setUI(...args) {
 		//TODO Test how it works with themes. Might have to store the previous state.
+		if (!_lastSceneWasHTML) {
+			//Stores the bottom UI starting status from a page where the module was inactive.
+			_oldBottomStatus = this.getBottomStatus();
+			_oldLeftStatus = this.getLeftStatus();
+		}
 		//Here the redundancy is important, in the case of the user changes options in the same scene. Learned the hard way.
 		if (this.minUI == true) {
-			$('#ui-left').hide();
+			$('#ui-left').invisible();
 			$('#ui-bottom').hide();
 			if (this.rightDisabled == false) {
 				$('#ui-top').hide();
 				$('#ui-right').css('display', 'flex');
 			} else {
 				$('#ui-right').hide();
-				$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' }); //Small fix to the top styling to keep it in the same place (As anvil's anvil disappears)
+				$('#ui-top').css({ display: 'inline-block' }); //Small fix to the top styling to keep it in the same place (As foundry's anvil disappears)
 			}
 		} else {
 			$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' });
-			$('#ui-left').css('display', 'flex');
+			$('#ui-left').visible();
 			$('#ui-bottom').css('display', 'flex');
 			if (this.rightDisabled == true) {
 				$('#ui-right').hide();
@@ -209,8 +256,17 @@ class HTMLToScene {
 			}
 		}
 
-		if (this.keepTop == true)
-			$('#ui-top').css({ display: 'inline-block', 'margin-left': '130px' });
+		if (this.keepTop == true) $('#ui-top').css({ display: 'inline-block' });
+
+		if (this.keepPlayerList == true) {
+			$('#ui-left').show();
+			this.setLeftStatus(7);
+		}
+
+		if (this.keepBottomControls > 0) {
+			$('#ui-bottom').show();
+			this.setBottomStatus(this.keepBottomControls);
+		}
 
 		if (this.hideBoard == true) {
 			$('#board').hide();
@@ -237,8 +293,9 @@ class HTMLToScene {
 		HTMLAccess = null;
 
 		//Restoring FoundryVTT's UI, this might not work with UI modifications.
-		$('#ui-left').css('display', 'flex');
+		$('#ui-left').visible();
 		$('#ui-bottom').css('display', 'flex');
+		$('#hotbar').show();
 		$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' }); //Default FoundryVTT value
 		$('#ui-right').css('display', 'flex');
 		if (game.paused) {
@@ -248,7 +305,9 @@ class HTMLToScene {
 		$('#board').show();
 		$('#smalltime-app').show();
 
-		clearInterval(_updateInterval); //Stoping the interval
+		this.stopActiveIntervals();
+		this.setBottomStatus(_oldBottomStatus);
+		this.setLeftStatus(_oldLeftStatus);
 	}
 
 	/**
@@ -399,6 +458,138 @@ class HTMLToScene {
 			$('#smalltime-app').hide();
 		} else {
 			$('#smalltime-app').show();
+		}
+	}
+
+	/**
+	 * Updates Scene controls (this is needed on a scene change)
+	 */
+	static updateSceneControls() {
+		if (this.keepPlayerList == true && this.enabled) {
+			$('#ui-left').show();
+			this.setLeftStatus(7);
+		}
+	}
+
+	/**
+	 * Get bottom ui's status and returns it.
+	 *
+	 * @returns {Number} between 0 and 7.
+	 */
+	static getBottomStatus() {
+		let status = 0;
+		let hotbar = this.isDOMNodeHidden($('#hotbar')[0]);
+		let camera = this.isDOMNodeHidden($('#camera-views')[0]);
+		let fps = this.isDOMNodeHidden($('#fps')[0]);
+		status = hotbar + camera * 2 + fps * 3;
+
+		if (hotbar + camera == 0 && status == 3) status = 7; //Special status to show only the FPS
+		return status;
+	}
+
+	/**
+	 * Sets the bottom UI due the variable
+	 *
+	 * @param {bottomStatus} needs a number between 0 and 7
+	 */
+	static setBottomStatus(bottomStatus) {
+		switch (bottomStatus) {
+			case 1:
+				$('#hotbar').show();
+				$('#camera-views').hide();
+				$('#fps').hide();
+				break;
+			case 2:
+				$('#hotbar').hide();
+				$('#camera-views').show();
+				$('#fps').hide();
+				break;
+			case 3:
+				$('#hotbar').show();
+				$('#camera-views').show();
+				$('#fps').hide();
+				break;
+			case 4:
+				$('#hotbar').show();
+				$('#camera-views').hide();
+				$('#fps').show();
+				break;
+			case 5:
+				$('#hotbar').hide();
+				$('#camera-views').show();
+				$('#fps').show();
+				break;
+			case 6:
+				$('#hotbar').show();
+				$('#camera-views').show();
+				$('#fps').show();
+				break;
+			case 7:
+				$('#hotbar').hide();
+				$('#camera-views').hide();
+				$('#fps').show();
+				break;
+		}
+	}
+
+	/**
+	 * Get left ui's status and returns it.
+	 *
+	 * @returns {Number} between 0 and 7.
+	 */
+	static getLeftStatus() {
+		let status = 0;
+		let logo = this.isDOMNodeHidden($('#logo')[0]);
+		let controls = this.isDOMNodeHidden($('#controls')[0]);
+		let players = this.isDOMNodeHidden($('#players')[0]);
+		status = logo + controls * 2 + players * 3;
+
+		if (logo + controls == 0 && players == 3) status = 7; //Special status to show only the players
+		return status;
+	}
+
+	/**
+	 * Sets the bottom UI due the variable
+	 *
+	 * @param {leftStatus} needs a number between 0 and 7
+	 */
+	static setLeftStatus(leftStatus) {
+		switch (leftStatus) {
+			case 1:
+				$('#logo').visible();
+				$('#controls').invisible();
+				$('#players').invisible();
+				break;
+			case 2:
+				$('#logo').invisible();
+				$('#controls').visible();
+				$('#players').invisible();
+				break;
+			case 3:
+				$('#logo').visible();
+				$('#controls').visible();
+				$('#players').invisible();
+				break;
+			case 4:
+				$('#logo').visible();
+				$('#controls').invisible();
+				$('#players').visible();
+				break;
+			case 5:
+				$('#logo').invisible();
+				$('#controls').visible();
+				$('#players').visible();
+				break;
+			case 6:
+				$('#logo').visible();
+				$('#controls').visible();
+				$('#players').visible();
+				break;
+			case 7:
+				$('#logo').invisible();
+				$('#controls').invisible();
+				$('#players').visible();
+				break;
 		}
 	}
 
@@ -735,6 +926,27 @@ class HTMLToScene {
 			}, updateMs);
 		}
 	}
+
+	static isDOMNodeHidden(el) {
+		return el.offsetParent === null;
+	}
+
+	/**
+	 * Stops active intervals used by the module
+	 */
+	static stopActiveIntervals() {
+		clearInterval(_updateInterval);
+		clearInterval(_refreshingInterval);
+	}
+
+	/**
+	 * Forces a IFrame refresh
+	 */
+	static refreshIFrame() {
+		console.log(moduleprefix + 'Refreshing IFrame...');
+		let iframe = document.getElementById(moduleapp);
+		iframe.src = iframe.src;
+	}
 }
 
 // Handlebars helpers
@@ -745,6 +957,22 @@ Handlebars.registerHelper('ifEquals', function (v1, v2, options) {
 	}
 	return options.inverse(this);
 });
+
+// JQuery helpers
+
+jQuery.fn.visible = function () {
+	return this.css('visibility', 'visible');
+};
+
+jQuery.fn.invisible = function () {
+	return this.css('visibility', 'hidden');
+};
+
+jQuery.fn.visibilityToggle = function () {
+	return this.css('visibility', function (i, visibility) {
+		return visibility == 'visible' ? 'hidden' : 'visible';
+	});
+};
 
 // Hooks section
 
@@ -758,6 +986,7 @@ Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
 Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
 Hooks.on('collapseSidebar', () => HTMLToScene.updateWidth());
 Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());
+Hooks.on('renderSceneControls', () => HTMLToScene.updateSceneControls());
 Hooks.on('pauseGame', () => HTMLToScene.pauseControl());
 
 Hooks.on('diceSoNiceReady', () => {
