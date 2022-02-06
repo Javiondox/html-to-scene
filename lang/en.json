@@ -43,8 +43,26 @@
 		},
 		"hideBoard": {
 			"name": "Hide FoundryVTT's board",
-			"desc": "Hides the board for a noticeable FPS boost. (You won't render the canvas).",
-			"tip": "Other modules that may depend on the board might malfunction, check your browser's console."
+			"desc": "Hides the board for a noticeable performace boost. (You won't render the canvas).",
+			"tip": "Other modules that may depend on the board might malfunction or do nothing, check your browser's console."
+		},
+		"passData": {
+			"name": "Enable helpers for two-way communication",
+			"desc": "Puts in use inactive variables to help to make two way communication between the iframe and FoundryVTT easier. <a href='https://github.com/Javiondox/html-to-scene/wiki/Two-way-communication-helpers'>See the wiki for a better explanation</a>.",
+			"tip": "To fully make use of this you will need to have coding and macro knowledge."
+		},
+		"dataUpdateRate": {
+			"name": "FoundryVTTAccess update rate",
+			"values": {
+				"default": "Don't update. Refresh to update.",
+				"fivesec": "One update every 5 seconds.",
+				"onesec": "One update each second.",
+				"halfasec": "Two updates per second.",
+				"cuarterofasec": "Four updates per second.",
+				"realtime":	"Real-time."
+			},
+			"desc": "Changes the speed that the variable FoundryVTTAccess updates with new information. Use updateRate to sync it with your iframe.",
+			"tip": "This could affect performace. Depends on the use."
 		},
 		"rememberjsexecution": "Please, remember to input only files that you fully trust. You might be allowing unwanted javascript execution in your system. And that is bad."
 	}
