@@ -12,7 +12,7 @@
 		},
 		"fileLoc": {
 			"name": "Select HTML file",
-			"hint": "You can select any HTML file stored on your FoundryVTT's data folder.",
+			"hint": "You can select any HTML file stored on your FoundryVTT's data folder by using a relative path.",
 			"tip": "Do it on a empty canvas to increase performance. You can also put some websites that allow iframes."
 		},
 		"minUI": {
@@ -39,8 +39,7 @@
 				"bothplusfps": "Allow the hotbar, the cameras and the FPS meter",
 				"fpsonly": "Allow only FoundryVTT's FPS meter"
 			},
-			"desc": "Allows you to select how do you want the bottom controls be displayed.",
-			"tip": "You can use \"Allow the cameras and the FPS meter\" while you don't use any cameras to change the FPS meter location."
+			"desc": "Allows you to select how do you want the bottom controls be displayed."
 		},
 		"spaceRight": {
 			"name": "Respect Sidebar's Space",
