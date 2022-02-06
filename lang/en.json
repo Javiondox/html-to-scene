@@ -48,7 +48,7 @@
 		},
 		"passData": {
 			"name": "Enable helpers for two-way communication",
-			"desc": "Puts in use inactive variables to help to make two way communication between the iframe and FoundryVTT easier. <a href='https://github.com/Javiondox/html-to-scene/wiki/Two-way-communication-helpers'>See the wiki for a better explanation</a>.",
+			"desc": "Puts in use inactive variables to help to make two way communication between the iframe and FoundryVTT easier. See the wiki on GitHub for a better explanation.",
 			"tip": "To fully make use of this you will need to have coding and macro knowledge."
 		},
 		"dataUpdateRate": {
