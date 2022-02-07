@@ -234,20 +234,20 @@ class HTMLToScene {
 			this.setLeftStatus(0);
 			this.setBottomStatus(0);
 			if (this.rightDisabled) {
-				$('#ui-right').hide();
-				$('#ui-top').show();
+				this.nodeVisibility($('#ui-right')[0], 'hidden');
+				this.nodeVisibility($('#ui-top')[0], 'visible');
 			} else {
-				$('#ui-top').hide();
-				$('#ui-right').show();
+				this.nodeVisibility($('#ui-top')[0], 'hidden');
+				this.nodeVisibility($('#ui-right')[0], 'visible');
 			}
 		} else {
 			this.setLeftStatus(this._oldLefttatus);
 			this.setBottomStatus(this._oldBottomStatus);
-			$('#ui-top').show();
+			this.nodeVisibility($('#ui-top')[0], 'visible');
 			if (this.rightDisabled) {
-				$('#ui-right').hide();
+				this.nodeVisibility($('#ui-right')[0], 'hidden');
 			} else {
-				$('#ui-right').show();
+				this.nodeVisibility($('#ui-right')[0], 'visible');
 			}
 		}
 
@@ -260,17 +260,15 @@ class HTMLToScene {
 			}
 		}
 
-		if (this.keepTop == true) $('#ui-top').css({ display: 'inline-block' });
+		if (this.keepTop == true) this.nodeVisibility($('#ui-top')[0], 'visible');
 
 		if (this.keepPlayerList == true) {
 			$('#ui-left').show();
 			this.setLeftStatus(7);
 		}
 
-		if (this.keepBottomControls > 0) {
-			$('#ui-bottom').show();
-			this.setBottomStatus(this.keepBottomControls);
-		}
+		this.nodeVisibility($('#ui-bottom')[0], 'visible');
+		this.setBottomStatus(this.keepBottomControls);
 
 		if (this.hideBoard == true) {
 			$('#board').hide();
@@ -298,10 +296,10 @@ class HTMLToScene {
 
 		//Restoring FoundryVTT's UI, this might not work with UI modifications.
 		this.nodeVisibility($('#ui-left')[0], 'visible');
-		$('#ui-bottom').show();
-		$('#hotbar').show();
-		$('#ui-top').show();
-		$('#ui-right').show();
+		this.nodeVisibility($('#ui-bottom')[0], 'visible');
+		this.nodeVisibility($('#hotbar')[0], 'visible');
+		this.nodeVisibility($('#ui-top')[0], 'visible');
+		this.nodeVisibility($('#ui-right')[0], 'visible');
 		if (game.paused) {
 			//To prevent the game paused indicator to reappear on other scene.
 			$('#pause').show();
@@ -476,7 +474,7 @@ class HTMLToScene {
 	static updateSceneControls() {
 		if (this.enabled) {
 			if (this.keepPlayerList == true) {
-				$('#ui-left').show();
+				this.nodeVisibility($('#ui-left')[0], 'visible');
 				this.setLeftStatus(7);
 			} else {
 				if (this.minUI) {
@@ -484,6 +482,12 @@ class HTMLToScene {
 				} else {
 					this.setLeftStatus(this._oldLeftStatus);
 				}
+			}
+			if (this.minUI) {
+				this.nodeVisibility($('#ui-bottom')[0], 'visible');
+				this.setBottomStatus(this.keepBottomControls);
+			} else {
+				this.setBottomStatus(this._oldBottomStatus);
 			}
 		}
 	}
@@ -495,9 +499,9 @@ class HTMLToScene {
 	 */
 	static getBottomStatus() {
 		let status = 0;
-		let hotbar = this.isDOMNodeHidden($('#hotbar')[0]);
-		let camera = this.isDOMNodeHidden($('#camera-views')[0]);
-		let fps = this.isDOMNodeHidden($('#fps')[0]);
+		let hotbar = this.isDOMNodeShown($('#hotbar')[0]);
+		let camera = this.isDOMNodeShown($('#camera-views')[0]);
+		let fps = this.isDOMNodeShown($('#fps')[0]);
 		status = hotbar + camera * 2 + fps * 3;
 
 		if (hotbar + camera == 0 && status == 3) status = 7; //Special status to show only the FPS
@@ -511,40 +515,45 @@ class HTMLToScene {
 	 */
 	static setBottomStatus(bottomStatus) {
 		switch (bottomStatus) {
+			case 0:
+				this.nodeVisibility($('#hotbar')[0], 'hidden');
+				this.nodeVisibility($('#camera-views')[0], 'hidden');
+				this.nodeVisibility($('#fps')[0], 'hidden');
+				break;
 			case 1:
-				$('#hotbar').show();
-				$('#camera-views').hide();
-				$('#fps').hide();
+				this.nodeVisibility($('#hotbar')[0], 'visible');
+				this.nodeVisibility($('#camera-views')[0], 'hidden');
+				this.nodeVisibility($('#fps')[0], 'hidden');
 				break;
 			case 2:
-				$('#hotbar').hide();
-				$('#camera-views').show();
-				$('#fps').hide();
+				this.nodeVisibility($('#hotbar')[0], 'hidden');
+				this.nodeVisibility($('#camera-views')[0], 'visible');
+				this.nodeVisibility($('#fps')[0], 'hidden');
 				break;
 			case 3:
-				$('#hotbar').show();
-				$('#camera-views').show();
-				$('#fps').hide();
+				this.nodeVisibility($('#hotbar')[0], 'visible');
+				this.nodeVisibility($('#camera-views')[0], 'visible');
+				this.nodeVisibility($('#fps')[0], 'hidden');
 				break;
 			case 4:
-				$('#hotbar').show();
-				$('#camera-views').hide();
-				$('#fps').show();
+				this.nodeVisibility($('#hotbar')[0], 'visible');
+				this.nodeVisibility($('#camera-views')[0], 'hidden');
+				this.nodeVisibility($('#fps')[0], 'visible');
 				break;
 			case 5:
-				$('#hotbar').hide();
-				$('#camera-views').show();
-				$('#fps').show();
+				this.nodeVisibility($('#hotbar')[0], 'hidden');
+				this.nodeVisibility($('#camera-views')[0], 'visible');
+				this.nodeVisibility($('#fps')[0], 'visible');
 				break;
 			case 6:
-				$('#hotbar').show();
-				$('#camera-views').show();
-				$('#fps').show();
+				this.nodeVisibility($('#hotbar')[0], 'visible');
+				this.nodeVisibility($('#camera-views')[0], 'visible');
+				this.nodeVisibility($('#fps')[0], 'visible');
 				break;
 			case 7:
-				$('#hotbar').hide();
-				$('#camera-views').hide();
-				$('#fps').show();
+				this.nodeVisibility($('#hotbar')[0], 'hidden');
+				this.nodeVisibility($('#camera-views')[0], 'hidden');
+				this.nodeVisibility($('#fps')[0], 'visible');
 				break;
 		}
 	}
@@ -556,9 +565,9 @@ class HTMLToScene {
 	 */
 	static getLeftStatus() {
 		let status = 0;
-		let logo = this.isDOMNodeHidden($('#logo')[0]);
-		let controls = this.isDOMNodeHidden($('#controls')[0]);
-		let players = this.isDOMNodeHidden($('#players')[0]);
+		let logo = this.isDOMNodeShown($('#logo')[0]);
+		let controls = this.isDOMNodeShown($('#controls')[0]);
+		let players = this.isDOMNodeShown($('#players')[0]);
 		status = logo + controls * 2 + players * 3;
 
 		if (logo + controls == 0 && players == 3) status = 7; //Special status to show only the players
@@ -956,8 +965,13 @@ class HTMLToScene {
 		}
 	}
 
-	static isDOMNodeHidden(el) {
-		return el.offsetParent === null;
+	/**
+	 * Checks element's visibility
+	 * @param {HTMLElement} el
+	 * @returns Boolean
+	 */
+	static isDOMNodeShown(el) {
+		return el.style.visibility == 'visible' ? true : false;
 	}
 
 	/**
@@ -978,9 +992,9 @@ class HTMLToScene {
 	}
 
 	/**
-	 * Visibility helper
-	 *
-	 *
+	 * Visibility Helper
+	 * @param {HTMLElement} DOMNode
+	 * @param {String} visibility
 	 */
 	static nodeVisibility(DOMNode, visibility) {
 		if (visibility == 'visible' || visibility == 'hidden') {
