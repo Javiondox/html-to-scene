@@ -80,7 +80,7 @@
 				"realtime":	"Tiempo real"
 			},
 			"desc": "Cambia la velocidad en la que la variable FoundryVTTAccess se actualiza con información nueva. Utiliza updateRate para sincronizarla con tu iframe.",
-			"tip": "This could affect performace. Depends on the use."
+			"tip": "Esto podría afectar al rendimiento. Depende en el uso."
 		},
 		"iFrameRefreshRate": {
 			"name": "Actualización de IFrame",

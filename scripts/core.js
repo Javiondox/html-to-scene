@@ -558,39 +558,39 @@ class HTMLToScene {
 	static setLeftStatus(leftStatus) {
 		switch (leftStatus) {
 			case 1:
-				$('#logo').visible();
-				$('#controls').invisible();
-				$('#players').invisible();
+				$('#logo')[0].visible();
+				$('#controls')[0].invisible();
+				$('#players')[0].invisible();
 				break;
 			case 2:
-				$('#logo').invisible();
-				$('#controls').visible();
-				$('#players').invisible();
+				$('#logo')[0].invisible();
+				$('#controls')[0].visible();
+				$('#players')[0].invisible();
 				break;
 			case 3:
-				$('#logo').visible();
-				$('#controls').visible();
-				$('#players').invisible();
+				$('#logo')[0].visible();
+				$('#controls')[0].visible();
+				$('#players')[0].invisible();
 				break;
 			case 4:
-				$('#logo').visible();
-				$('#controls').invisible();
-				$('#players').visible();
+				$('#logo')[0].visible();
+				$('#controls')[0].invisible();
+				$('#players')[0].visible();
 				break;
 			case 5:
-				$('#logo').invisible();
-				$('#controls').visible();
-				$('#players').visible();
+				$('#logo')[0].invisible();
+				$('#controls')[0].visible();
+				$('#players')[0].visible();
 				break;
 			case 6:
-				$('#logo').visible();
-				$('#controls').visible();
-				$('#players').visible();
+				$('#logo')[0].visible();
+				$('#controls')[0].visible();
+				$('#players')[0].visible();
 				break;
 			case 7:
-				$('#logo').invisible();
-				$('#controls').invisible();
-				$('#players').visible();
+				$('#logo')[0].invisible();
+				$('#controls')[0].invisible();
+				$('#players')[0].visible();
 				break;
 		}
 	}
@@ -987,7 +987,7 @@ Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
 Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
 Hooks.on('collapseSidebar', () => HTMLToScene.updateWidth());
 Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());
-Hooks.on('renderSceneControls', () => HTMLToScene.updateSceneControls());
+Hooks.on('lightingRefresh', () => HTMLToScene.updateSceneControls());
 Hooks.on('pauseGame', () => HTMLToScene.pauseControl());
 
 Hooks.on('diceSoNiceReady', () => {
