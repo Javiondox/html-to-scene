@@ -17,7 +17,7 @@
 		},
 		"minUI": {
 			"name": "Minimal User Interface",
-			"desc": "Removes unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
+			"desc": "Hides unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
 		},
 		"keepTop": {
 			"name": "Keep Scene Changer",
@@ -47,8 +47,8 @@
 			"tip": "You can change the color of the canvas' background color to affect the color behind the controls."
 		},
 		"rightDisabled": {
-			"name": "Disable Sidebar",
-			"desc": "Removes the sidebar from the UI, enabling back the scene changer on the top. (Ideal if your group communicates via voice chat or doesn't need to throw dice).",
+			"name": "Hide Sidebar",
+			"desc": "Hides the sidebar from the UI, enabling back the scene changer on the top. (Ideal if your group communicates via voice chat or doesn't need to throw dice).",
 			"tip": "You might want to have other scene visible to gain back normal FoundryVTT's controls. (If not, you can always disable this module for the current scene)."
 		},
 		"hidePaused": {

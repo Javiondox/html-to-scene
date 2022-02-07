@@ -17,7 +17,7 @@
 		},
 		"minUI": {
 			"name": "Interfaz Mínima",
-			"desc": "Elimina elementos innecesarios de la interfaz de FoundryVTT mientras un fichero HTML está siendo mostrado."
+			"desc": "Esconde elementos innecesarios de la interfaz de FoundryVTT mientras un fichero HTML está siendo mostrado."
 		},
 		"keepTop": {
 			"name": "Mantener El Cambiador De Jscenas",
@@ -47,8 +47,8 @@
 			"tip": "Puedes cambiar el color del fondo de la escena para cambiar el color que se muestra bajo los controles."
 		},
 		"rightDisabled": {
-			"name": "Desactiva La Barra Lateral",
-			"desc": "Elimina la barra lateral, reactivando el intercambiador de escenas en la parte superior. (Ideal si tu grupo se comunica por chat de voz o no necesita lanzar dados).",
+			"name": "Esconder La Barra Lateral",
+			"desc": "Esconde la barra lateral, reactivando el intercambiador de escenas en la parte superior. (Ideal si tu grupo se comunica por chat de voz o no necesita lanzar dados).",
 			"tip": "Posiblemente quedrás tener otra escena visible para ganar de vuelta los controles normales de FoundryVTT. (Si no, siempre puedes desactivar el modulo para la escena actual)."
 		},
 		"hidePaused": {
