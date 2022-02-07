@@ -1,6 +1,7 @@
 {
 	"htmltoscene": {
 		"title": "HTML A Escena",
+		"pathPlaceholder": "Ruta relativa desde \"Data\" o una URL",
 		"uisettings": "Ajustes de Interfaz",
 		"miscsettings": "Ajustes Misceláneos",
 		"advsettings": "Ajustes Avanzados",

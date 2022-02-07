@@ -1,6 +1,7 @@
 {
 	"htmltoscene": {
 		"title": "HTML To Scene",
+		"pathPlaceholder": "Relative File Path from \"Data\" or a URL",
 		"uisettings": "UI Settings",
 		"miscsettings": "Miscellaneous Settings",
 		"advsettings": "Advanced Settings",
