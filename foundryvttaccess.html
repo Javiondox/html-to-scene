@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-	<div id="changeme" style="background-color:white; float:left;"> <!--Just for looks-->
-    <header id="hello"></header>
-    <main id="text"></main>
-    <footer><button onclick="debugMode();">Activate super debug mode 💪</button></footer>
-	</div>
-    <script>
-		let F;
-		//This will triggered exactly once, and will wait to trigger main(); until it sees the FoundryVTT node.
-		(async () => {
-				console.log("Waiting for FoundryVTT");
-				while (!window.hasOwnProperty("FoundryVTT"))
-					await new Promise(resolve => setTimeout(resolve, 1000));
-				console.log("FoundryVTT is defined");
-				F = FoundryVTT; //References "FoundryVTT" object as "F" to make it shorter.
-				main();
-			})();
 
-			//You can write here code that would work regardless of FoundryVTT status.
-			document.getElementById("hello").innerHTML = "Hello World!"
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+
+<body>
+	<div id="changeme" style="background-color:white; float:left;">
+		<!--Just for looks-->
+		<header id="hello"></header>
+		<main id="text"></main>
+		<footer><button onclick="debugMode();">Activate super debug mode 💪</button></footer>
+	</div>
+	<script>
+		let F;
+		//This will triggered exactly once, it will wait to trigger main() until it sees the FoundryVTT node.
+		(async () => {
+			console.log("Waiting for FoundryVTT");
+			while (!window.hasOwnProperty("FoundryVTT"))
+				await new Promise(resolve => setTimeout(resolve, 1000));
+			console.log("FoundryVTT is defined");
+			F = FoundryVTT; //References "FoundryVTT" object as "F" to make it shorter.
+			main();
+		})();
+
+		//You can write here code that would work regardless of FoundryVTT status.
+		document.getElementById("hello").innerHTML = "Hello World!"
 
 		//This will triggered once, here is 100% secure to use FoundryVTTAccess.
-		function main(){
+		function main() {
 			//This only starts once the FoundryVTT object is on the iframe
 			update() //Run it once so the entries don't appear empty on high updateRates
-			if(F.updateRate >= 0){
-				setInterval(() => {update()}, F.updateRate) //The frecuency in miliseconds at data is updated, using the same updateRate than in FoundryVTT is recommended. F.updateRate takes care of that.
+			if (F.updateRate >= 0) {
+				setInterval(() => { update() }, F.updateRate) //The frecuency in miliseconds at data is updated, using the same updateRate than in FoundryVTT is recommended. F.updateRate takes care of that.
 			}
+			F.iFrameReady //Triggers a hook on FoundryVTT
 		}
-		function update(){ //This will be triggered at the start and each time the data has to update.
-			document.getElementById("text").innerHTML = "<br>Server uptime: "+F.game.time.serverTime + "<br>Logged as: " + F.game.user.name + "<br>People to TPK: " + Number(F.game.users.map.length) //This would be mostly the same on a macro
+		function update() { //This will be triggered at the start and each time the data has to update.
+			document.getElementById("text").innerHTML = "<br>Server uptime: " + F.game.time.serverTime + "<br>Logged as: " + F.game.user.name + "<br>People to TPK: " + Number(F.game.users.map.length) //This would be mostly the same on a macro
+			F.iFrameUpdated //Triggers a hook on FoundryVTT
 		}
-		function debugMode(){
+		function debugMode() {
 			F.CONFIG.debug.hooks = true;
 			F.CONFIG.debug.polygons = true;
 			F.CONFIG.debug.mouseInteraction = true;
@@ -47,11 +52,12 @@
 			F.CONFIG.debug.keybindings = true;
 			F.CONFIG.debug.time = true;
 		}
-    </script>
+	</script>
 	<!--Pro-tip: Try HTMLAccess with this macro:
 
 		HTMLAccess.getElementById('changeme').style.background = 'brown'
 	
 	-->
-  </body>
+</body>
+
 </html>
