@@ -5,13 +5,6 @@ const moduleid = 'html-to-scene';
 const moduleapp = 'html-to-scene';
 var FoundryVTTAccess;
 var HTMLAccess;
-let _diceSoNiceInstalled = false;
-let _updateInterval;
-let _refreshingInterval;
-let _iFrameNode;
-let _oldBottomStatus = 1;
-let _oldLeftStatus = 6;
-let _lastSceneWasHTML = false;
 
 /**
  *  HTML To Scene static class
@@ -20,6 +13,15 @@ let _lastSceneWasHTML = false;
  */
 
 class HTMLToScene {
+	static _diceSoNiceInstalled = false;
+	static _updateInterval;
+	static _refreshingInterval;
+	static _iFrameNode;
+	static _oldBottomStatus = 1;
+	static _oldLeftStatus = 6;
+	static _lastSceneWasHTML = false;
+	static _localJQuery;
+
 	/** @type {String} */
 	static get fileLocation() {
 		return '';
@@ -164,15 +166,15 @@ class HTMLToScene {
 	static replace(...args) {
 		if (!this.enabled) {
 			this.restoreUI();
-			_lastSceneWasHTML = false;
+			this._lastSceneWasHTML = false;
 			return;
 		}
-		_lastSceneWasHTML = true;
+		this._lastSceneWasHTML = true;
 		this.stopActiveIntervals();
 		this.setUI(); //Sets FoundryVTT's UI as needed.
 
 		//Deleting previous iframe
-		if (_iFrameNode != null) document.body.removeChild(_iFrameNode);
+		if (this._iFrameNode != null) document.body.removeChild(this._iFrameNode);
 
 		var canvasHeight = '100%';
 		var canvasWidth = '';
@@ -190,7 +192,7 @@ class HTMLToScene {
 		);
 
 		//Checking for diceSoNice, then putting the iframe before if that is the case.
-		if (!_diceSoNiceInstalled) {
+		if (!this._diceSoNiceInstalled) {
 			document.body.insertBefore(
 				this.createIframe(canvasHeight, canvasWidth),
 				document.getElementById('pause')
@@ -207,10 +209,12 @@ class HTMLToScene {
 		}
 
 		if (this.iFrameRefreshRate > 0) {
-			_refreshingInterval = setInterval(() => {
+			this._refreshingInterval = setInterval(() => {
 				this.refreshIFrame();
 			}, this.iFrameRefreshRate);
 		}
+
+		Hooks.call('htmlToSceneReady', this);
 	}
 
 	/**
@@ -220,15 +224,15 @@ class HTMLToScene {
 	 */
 	static setUI(...args) {
 		//TODO Test how it works with themes. Might have to store the previous state. (It's supposed to be stored thanks to jQuery)
-		if (!_lastSceneWasHTML) {
+		if (!this._lastSceneWasHTML) {
 			//Stores the bottom UI starting status from a page where the module was inactive.
-			_oldBottomStatus = this.getBottomStatus();
-			_oldLeftStatus = this.getLeftStatus();
+			this._oldBottomStatus = this.getBottomStatus();
+			this._oldLeftStatus = this.getLeftStatus();
 		}
 		//Here the redundancy is important, in the case of the user changes options in the same scene. Learned the hard way.
 		if (this.minUI == true) {
-			$('#ui-left').invisible();
-			$('#ui-bottom').hide();
+			this.setLeftStatus(0);
+			this.setBottomStatus(0);
 			if (this.rightDisabled) {
 				$('#ui-right').hide();
 				$('#ui-top').show();
@@ -237,8 +241,8 @@ class HTMLToScene {
 				$('#ui-right').show();
 			}
 		} else {
-			$('#ui-left').visible();
-			$('#ui-bottom').show();
+			this.setLeftStatus(this._oldLefttatus);
+			this.setBottomStatus(this._oldBottomStatus);
 			$('#ui-top').show();
 			if (this.rightDisabled) {
 				$('#ui-right').hide();
@@ -286,18 +290,18 @@ class HTMLToScene {
 		console.log(moduleprefix + 'Restoring FoundryVTT features...');
 
 		//Checking if the iframe still exists, and deleting it in that case.
-		if (_iFrameNode != null) document.body.removeChild(_iFrameNode);
-		_iFrameNode = null; //Deleting iframe reference.
+		if (this._iFrameNode != null) document.body.removeChild(this._iFrameNode);
+		this._iFrameNode = null; //Deleting iframe reference.
 		//Empties references
 		FoundryVTTAccess = null;
 		HTMLAccess = null;
 
 		//Restoring FoundryVTT's UI, this might not work with UI modifications.
-		$('#ui-left').visible();
-		$('#ui-bottom').css('display', 'flex');
+		this.nodeVisibility($('#ui-left')[0], 'visible');
+		$('#ui-bottom').show();
 		$('#hotbar').show();
-		$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' }); //Default FoundryVTT value
-		$('#ui-right').css('display', 'flex');
+		$('#ui-top').show();
+		$('#ui-right').show();
 		if (game.paused) {
 			//To prevent the game paused indicator to reappear on other scene.
 			$('#pause').show();
@@ -306,8 +310,8 @@ class HTMLToScene {
 		$('#smalltime-app').show();
 
 		this.stopActiveIntervals();
-		this.setBottomStatus(_oldBottomStatus);
-		this.setLeftStatus(_oldLeftStatus);
+		this.setBottomStatus(this._oldBottomStatus);
+		this.setLeftStatus(this._oldLeftStatus);
 	}
 
 	/**
@@ -329,7 +333,7 @@ class HTMLToScene {
 	 */
 	static updateWidth() {
 		if (this.enabled && this.spaceRight) {
-			$('#htmltoiframe').width(this.calcSpacedWidth());
+			$('#' + moduleapp).width(this.calcSpacedWidth());
 		}
 	}
 
@@ -365,8 +369,8 @@ class HTMLToScene {
 		ifrm.style.left = 0;
 		ifrm.style.top = 0;
 		ifrm.frameborder = 0;
-		_iFrameNode = ifrm;
-		return _iFrameNode;
+		this._iFrameNode = ifrm;
+		return this._iFrameNode;
 	}
 
 	/**
@@ -440,15 +444,18 @@ class HTMLToScene {
 
 	/**
 	 * Changes iframe position to one before the nodeID given.
-	 * @param {HTML node ID attribute} nodeID
+	 * @param {HTML Node's ID} nodeID
 	 */
 	static swapPosition(nodeID) {
 		//Checking if the iframe still exists, and deleting it in that case.
 		//Doing it visually doesn't cause a iFrame reload.
 		var otherNode = document.getElementById(nodeID);
-		if (otherNode != null) {
+		if (otherNode != null && typeof otherNode == 'htmlelement') {
 			let otherZIndex = getComputedStyle(otherNode).getPropertyValue('z-index');
-			getComputedStyle(_iFrameNode).setProperty('z-index', otherZIndex - 1);
+			getComputedStyle(this._iFrameNode).setProperty(
+				'z-index',
+				otherZIndex - 1
+			);
 		}
 	}
 
@@ -467,9 +474,17 @@ class HTMLToScene {
 	 * Updates Scene controls (this is needed on a scene change)
 	 */
 	static updateSceneControls() {
-		if (this.keepPlayerList == true && this.enabled) {
-			$('#ui-left').show();
-			this.setLeftStatus(7);
+		if (this.enabled) {
+			if (this.keepPlayerList == true) {
+				$('#ui-left').show();
+				this.setLeftStatus(7);
+			} else {
+				if (this.minUI) {
+					this.setLeftStatus(0);
+				} else {
+					this.setLeftStatus(this._oldLeftStatus);
+				}
+			}
 		}
 	}
 
@@ -557,40 +572,45 @@ class HTMLToScene {
 	 */
 	static setLeftStatus(leftStatus) {
 		switch (leftStatus) {
+			case 0:
+				this.nodeVisibility($('#logo')[0], 'hidden');
+				this.nodeVisibility($('#controls')[0], 'hidden');
+				this.nodeVisibility($('#players')[0], 'hidden');
+				break;
 			case 1:
-				$('#logo')[0].visible();
-				$('#controls')[0].invisible();
-				$('#players')[0].invisible();
+				this.nodeVisibility($('#logo')[0], 'visible');
+				this.nodeVisibility($('#controls')[0], 'hidden');
+				this.nodeVisibility($('#players')[0], 'hidden');
 				break;
 			case 2:
-				$('#logo')[0].invisible();
-				$('#controls')[0].visible();
-				$('#players')[0].invisible();
+				this.nodeVisibility($('#logo')[0], 'hidden');
+				this.nodeVisibility($('#controls')[0], 'visible');
+				this.nodeVisibility($('#players')[0], 'hidden');
 				break;
 			case 3:
-				$('#logo')[0].visible();
-				$('#controls')[0].visible();
-				$('#players')[0].invisible();
+				this.nodeVisibility($('#logo')[0], 'visible');
+				this.nodeVisibility($('#controls')[0], 'visible');
+				this.nodeVisibility($('#players')[0], 'hidden');
 				break;
 			case 4:
-				$('#logo')[0].visible();
-				$('#controls')[0].invisible();
-				$('#players')[0].visible();
+				this.nodeVisibility($('#logo')[0], 'visible');
+				this.nodeVisibility($('#controls')[0], 'hidden');
+				this.nodeVisibility($('#players')[0], 'visible');
 				break;
 			case 5:
-				$('#logo')[0].invisible();
-				$('#controls')[0].visible();
-				$('#players')[0].visible();
+				this.nodeVisibility($('#logo')[0], 'hidden');
+				this.nodeVisibility($('#controls')[0], 'visible');
+				this.nodeVisibility($('#players')[0], 'visible');
 				break;
 			case 6:
-				$('#logo')[0].visible();
-				$('#controls')[0].visible();
-				$('#players')[0].visible();
+				this.nodeVisibility($('#logo')[0], 'visible');
+				this.nodeVisibility($('#controls')[0], 'visible');
+				this.nodeVisibility($('#players')[0], 'visible');
 				break;
 			case 7:
-				$('#logo')[0].invisible();
-				$('#controls')[0].invisible();
-				$('#players')[0].visible();
+				this.nodeVisibility($('#logo')[0], 'hidden');
+				this.nodeVisibility($('#controls')[0], 'hidden');
+				this.nodeVisibility($('#players')[0], 'visible');
 				break;
 		}
 	}
@@ -641,6 +661,14 @@ class HTMLToScene {
 			//Update rate (Helper)
 			static get updateRate() {
 				return updateMs;
+			}
+
+			static get iFrameReady() {
+				Hooks.call('htmlToSceneIFrameReady', this);
+			}
+
+			static get iFrameUpdated() {
+				Hooks.call('htmlToSceneIFrameUpdated', this);
 			}
 
 			//Default game
@@ -917,13 +945,13 @@ class HTMLToScene {
 		}
 		//FoundryVTTAccess = FoundryVTT;
 		FoundryVTTAccess = FoundryVTT;
-		_iFrameNode.contentWindow.FoundryVTT = FoundryVTTAccess;
-		HTMLAccess = _iFrameNode.contentWindow.document;
+		this._iFrameNode.contentWindow.FoundryVTT = FoundryVTTAccess;
+		HTMLAccess = this._iFrameNode.contentWindow.document;
 
 		//Setting the Updates
 		if (updateMs >= 0) {
-			_updateInterval = setInterval(() => {
-				_iFrameNode.contentWindow.FoundryVTT = FoundryVTTAccess;
+			this._updateInterval = setInterval(() => {
+				this._iFrameNode.contentWindow.FoundryVTT = FoundryVTTAccess;
 			}, updateMs);
 		}
 	}
@@ -936,8 +964,8 @@ class HTMLToScene {
 	 * Stops active intervals used by the module
 	 */
 	static stopActiveIntervals() {
-		clearInterval(_updateInterval);
-		clearInterval(_refreshingInterval);
+		clearInterval(this._updateInterval);
+		clearInterval(this._refreshingInterval);
 	}
 
 	/**
@@ -947,6 +975,21 @@ class HTMLToScene {
 		console.log(moduleprefix + 'Refreshing IFrame...');
 		let iframe = document.getElementById(moduleapp);
 		iframe.src = iframe.src;
+	}
+
+	/**
+	 * Visibility helper
+	 *
+	 *
+	 */
+	static nodeVisibility(DOMNode, visibility) {
+		if (visibility == 'visible' || visibility == 'hidden') {
+			DOMNode.style.visibility = visibility;
+		} else if (visibility == 'toggle') {
+			DOMNode.visibility = () => {
+				return DOMNode.style.visibility == 'visible' ? 'hidden' : 'visible';
+			};
+		}
 	}
 }
 
@@ -958,22 +1001,6 @@ Handlebars.registerHelper('ifEquals', function (v1, v2, options) {
 	}
 	return options.inverse(this);
 });
-
-// JQuery helpers
-
-jQuery.fn.visible = function () {
-	return this.css('visibility', 'visible');
-};
-
-jQuery.fn.invisible = function () {
-	return this.css('visibility', 'hidden');
-};
-
-jQuery.fn.visibilityToggle = function () {
-	return this.css('visibility', function (i, visibility) {
-		return visibility == 'visible' ? 'hidden' : 'visible';
-	});
-};
 
 // Hooks section
 
@@ -987,10 +1014,10 @@ Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
 Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
 Hooks.on('collapseSidebar', () => HTMLToScene.updateWidth());
 Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());
-Hooks.on('renderSceneControls', () => HTMLToScene.updateSceneControls());
+Hooks.on('lightingRefresh', () => HTMLToScene.updateSceneControls()); //renderSceneControls happens before the scene data is loaded
 Hooks.on('pauseGame', () => HTMLToScene.pauseControl());
 
 Hooks.on('diceSoNiceReady', () => {
 	HTMLToScene.swapPosition('dice-box-canvas');
-	_diceSoNiceInstalled = true;
+	HTMLToScene._diceSoNiceInstalled = true;
 });
