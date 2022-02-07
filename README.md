@@ -28,7 +28,7 @@ Here is the full list of options. Including those not included in the image.
 |4|Keep Player List|The same, but for the player list.|
 |5|Keep Bottom Controls|The same, but this one allows you to select if you want to show any combination of the following: the macro hotbar, cameras, FoundryVTT's fps meter (Keep in mind that the fps meter given by Foundry doesn't have to be fully accurate to the fps of the iframe).|
 |6|Respect Sidebar's Space| Changes the iframe size to create an empty space under the sidebar.
-|7|Disable Sidebar| Removes the sidebar from the UI. It will enable the Scene Changer back to allow you some way of going back. |
+|7|Hide Sidebar| Hides the sidebar from the UI. It will enable the Scene Changer back to allow you some way of going back. |
 |8|Hide 'Game Paused' | Hides the 'Game Paused' when enabled |
 |9|Hide 'SmallTime' | Hides [unsoluble's SmallTime clock](https://github.com/unsoluble/smalltime) (if active) |
 |-|Hide FoundryVTT's Board| Hides FoundryVTT's canvas (the board). Using `display:none` to gain some performace. |
