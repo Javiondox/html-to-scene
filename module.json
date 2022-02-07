@@ -15,7 +15,7 @@
 	"bugs": "https://github.com/Javiondox/html-to-scene/issues",
 	"changelog": "https://github.com/Javiondox/html-to-scene/releases",
 	"flags": {},
-	"version": "1.2.2",
+	"version": "1.2.4",
 	"minimumCoreVersion": "9",
 	"compatibleCoreVersion": "9",
 	"scripts": [

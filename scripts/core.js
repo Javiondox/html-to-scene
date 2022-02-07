@@ -219,7 +219,7 @@ class HTMLToScene {
 	 * @param  {...any} args
 	 */
 	static setUI(...args) {
-		//TODO Test how it works with themes. Might have to store the previous state.
+		//TODO Test how it works with themes. Might have to store the previous state. (It's supposed to be stored thanks to jQuery)
 		if (!_lastSceneWasHTML) {
 			//Stores the bottom UI starting status from a page where the module was inactive.
 			_oldBottomStatus = this.getBottomStatus();
@@ -229,21 +229,21 @@ class HTMLToScene {
 		if (this.minUI == true) {
 			$('#ui-left').invisible();
 			$('#ui-bottom').hide();
-			if (this.rightDisabled == false) {
-				$('#ui-top').hide();
-				$('#ui-right').css('display', 'flex');
-			} else {
+			if (this.rightDisabled) {
 				$('#ui-right').hide();
-				$('#ui-top').css({ display: 'inline-block' }); //Small fix to the top styling to keep it in the same place (As foundry's anvil disappears)
+				$('#ui-top').show();
+			} else {
+				$('#ui-top').hide();
+				$('#ui-right').show();
 			}
 		} else {
-			$('#ui-top').css({ display: 'inline-block', 'margin-left': '-90px' });
 			$('#ui-left').visible();
-			$('#ui-bottom').css('display', 'flex');
-			if (this.rightDisabled == true) {
+			$('#ui-bottom').show();
+			$('#ui-top').show();
+			if (this.rightDisabled) {
 				$('#ui-right').hide();
 			} else {
-				$('#ui-right').css('display', 'flex');
+				$('#ui-right').show();
 			}
 		}
 
@@ -558,39 +558,39 @@ class HTMLToScene {
 	static setLeftStatus(leftStatus) {
 		switch (leftStatus) {
 			case 1:
-				$('#logo').visible();
-				$('#controls').invisible();
-				$('#players').invisible();
+				$('#logo')[0].visible();
+				$('#controls')[0].invisible();
+				$('#players')[0].invisible();
 				break;
 			case 2:
-				$('#logo').invisible();
-				$('#controls').visible();
-				$('#players').invisible();
+				$('#logo')[0].invisible();
+				$('#controls')[0].visible();
+				$('#players')[0].invisible();
 				break;
 			case 3:
-				$('#logo').visible();
-				$('#controls').visible();
-				$('#players').invisible();
+				$('#logo')[0].visible();
+				$('#controls')[0].visible();
+				$('#players')[0].invisible();
 				break;
 			case 4:
-				$('#logo').visible();
-				$('#controls').invisible();
-				$('#players').visible();
+				$('#logo')[0].visible();
+				$('#controls')[0].invisible();
+				$('#players')[0].visible();
 				break;
 			case 5:
-				$('#logo').invisible();
-				$('#controls').visible();
-				$('#players').visible();
+				$('#logo')[0].invisible();
+				$('#controls')[0].visible();
+				$('#players')[0].visible();
 				break;
 			case 6:
-				$('#logo').visible();
-				$('#controls').visible();
-				$('#players').visible();
+				$('#logo')[0].visible();
+				$('#controls')[0].visible();
+				$('#players')[0].visible();
 				break;
 			case 7:
-				$('#logo').invisible();
-				$('#controls').invisible();
-				$('#players').visible();
+				$('#logo')[0].invisible();
+				$('#controls')[0].invisible();
+				$('#players')[0].visible();
 				break;
 		}
 	}
