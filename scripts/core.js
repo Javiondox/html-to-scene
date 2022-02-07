@@ -987,7 +987,7 @@ Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
 Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
 Hooks.on('collapseSidebar', () => HTMLToScene.updateWidth());
 Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());
-Hooks.on('lightingRefresh', () => HTMLToScene.updateSceneControls());
+Hooks.on('renderSceneControls', () => HTMLToScene.updateSceneControls());
 Hooks.on('pauseGame', () => HTMLToScene.pauseControl());
 
 Hooks.on('diceSoNiceReady', () => {
