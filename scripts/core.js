@@ -179,7 +179,7 @@ class HTMLToScene {
 		var canvasHeight = '100%';
 		var canvasWidth = '';
 
-		if (this.spaceRight == true) {
+		if (this.spaceRight == true && !this.rightDisabled) {
 			canvasWidth = this.calcSpacedWidth() + 'px'; //Non responsive solution, made responsive in the canvasPan hook.
 		} else {
 			canvasWidth = '100%'; //Responsive
@@ -208,13 +208,13 @@ class HTMLToScene {
 			this.passDataToIFrame(); //Adds FoundryVTT variables to the iframe
 		}
 
+		Hooks.call('htmlToSceneReady', this);
+
 		if (this.iFrameRefreshRate > 0) {
 			this._refreshingInterval = setInterval(() => {
 				this.refreshIFrame();
 			}, this.iFrameRefreshRate);
 		}
-
-		Hooks.call('htmlToSceneReady', this);
 	}
 
 	/**
@@ -252,24 +252,25 @@ class HTMLToScene {
 		}
 
 		if (this.hidePaused == true) {
-			$('#pause').hide();
+			this.nodeVisibility($('#pause')[0], 'hidden');
 		} else {
 			if (game.paused) {
 				//To prevent the game paused indicator to reappear on other scene.
-				$('#pause').show();
+				this.nodeVisibility($('#pause')[0], 'visible');
 			}
 		}
 
 		if (this.keepTop == true) this.nodeVisibility($('#ui-top')[0], 'visible');
 
 		if (this.keepPlayerList == true) {
-			$('#ui-left').show();
+			this.nodeVisibility($('#ui-left')[0], 'visible');
 			this.setLeftStatus(7);
 		}
 
 		this.nodeVisibility($('#ui-bottom')[0], 'visible');
 		this.setBottomStatus(this.keepBottomControls);
 
+		//This uses jQuery's .hide() and .show() that work like display:none and display:whateverwasbefore
 		if (this.hideBoard == true) {
 			$('#board').hide();
 		} else {
@@ -302,7 +303,7 @@ class HTMLToScene {
 		this.nodeVisibility($('#ui-right')[0], 'visible');
 		if (game.paused) {
 			//To prevent the game paused indicator to reappear on other scene.
-			$('#pause').show();
+			this.nodeVisibility($('#pause')[0], 'visible');
 		}
 		$('#board').show();
 		$('#smalltime-app').show();
@@ -327,11 +328,12 @@ class HTMLToScene {
 	}
 
 	/**
-	 * Updates iframe's width in the only case where it isn't responsive on the canvasPan hook (Triggered on a window size change).
+	 * Updates iframe's dimensions in the only case where it isn't responsive on the canvasPan hook (Triggered on a window size change).
 	 */
-	static updateWidth() {
-		if (this.enabled && this.spaceRight) {
+	static updateDimensions() {
+		if (this.enabled && this.spaceRight && !this.rightDisabled) {
 			$('#' + moduleapp).width(this.calcSpacedWidth());
+			$('#' + moduleapp).height('100%');
 		}
 	}
 
@@ -342,9 +344,9 @@ class HTMLToScene {
 		if (this.enabled) {
 			if (game.paused) {
 				//To prevent the game paused indicator to reappear on other scene.
-				$('#pause').show();
+				this.nodeVisibility($('#pause')[0], 'visible');
 			} else {
-				$('#pause').hide();
+				this.nodeVisibility($('#pause')[0], 'hidden');
 			}
 		}
 	}
@@ -1025,8 +1027,8 @@ Hooks.on('renderSceneConfig', (...args) =>
 );
 Hooks.on('canvasReady', (...args) => HTMLToScene.replace(...args));
 Hooks.on('updateScene', (...args) => HTMLToScene.replace(...args));
-Hooks.on('canvasPan', () => HTMLToScene.updateWidth());
-Hooks.on('collapseSidebar', () => HTMLToScene.updateWidth());
+Hooks.on('canvasPan', () => HTMLToScene.updateDimensions());
+Hooks.on('collapseSidebar', () => HTMLToScene.updateDimensions());
 Hooks.on('renderSmallTimeApp', () => HTMLToScene.updateSmallTime());
 Hooks.on('lightingRefresh', () => HTMLToScene.updateSceneControls()); //renderSceneControls happens before the scene data is loaded
 Hooks.on('pauseGame', () => HTMLToScene.pauseControl());
