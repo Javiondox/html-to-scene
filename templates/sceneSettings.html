@@ -7,14 +7,12 @@
 	</div>
 	<div class="form-group">
 		<div class="form-fields">
-			<input data-dtype="String" class="html-input" type="text" name="flags.htmltoscene.fileLoc"
-				placeholder="{{localize 'File Path'}}" value="{{fileLoc}}" class="htmltosceneEnabledOnly"
-				{{#unless enable}} disabled {{/unless}} />
+			<input data-dtype="String" class="html-input" type="text" name="flags.htmltoscene.fileLoc" placeholder="{{localize 'htmltoscene.pathPlaceholder'}}" value="{{fileLoc}}"/>
 			<!--<button type="button" class="file-picker" data-type="any" id="html-picker" name="html-picker"
 				data-target="flags.htmltoscene.fileLoc" title="Browse Files">
 				<i class="fas fa-file-import fa-fw">
 				</i>
-			</button> FoundryVTT 0.9 V2 still doesn't support uploading unsupported files. Lacking the knowledge to do a custom filepicker.-->
+			</button> FoundryVTT 0.9 V2 still doesn't support uploading unsupported files. Lacking the knowledge to do a custom filepicker...-->
 		</div>
 		<p class="notes">{{ localize "htmltoscene.fileLoc.hint"}}</p>
 		<p class="notes"><b>{{ localize "htmltoscene.recommendationtip" }}</b>{{ localize "htmltoscene.fileLoc.tip" }}
