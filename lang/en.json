@@ -1,101 +1,116 @@
 {
 	"htmltoscene": {
-		"title": "HTML To Scene",
-		"pathPlaceholder": "Relative File Path from \"Data\" to a .HTML file or a URL",
-		"uisettings": "UI Settings",
-		"miscsettings": "Miscellaneous Settings",
-		"advsettings": "Advanced Settings",
-		"recommendationtip": "Protip: ",
-		"warningtip":"WARNING: ",
-		"enable": {
-			"name": "Enable",
-			"desc": "Enables HTML To Scene on this scene."
-		},
-		"fileLoc": {
-			"name": "Select HTML file",
-			"hint": "You can select any HTML file stored on your FoundryVTT's data folder by using a relative path.",
-			"tip": "Do it on a empty canvas to increase performance. You can also put some websites that allow iframes."
-		},
-		"minUI": {
-			"name": "Minimal User Interface",
-			"desc": "Hides unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
-		},
-		"keepTop": {
-			"name": "Keep Scene Changer",
-			"desc": "Maintains the Scene Changer at the top of the screen in any case."
-		},
-		"keepPlayerList": {
-			"name": "Keep Player List",
-			"desc": "Maintains the player list in its original position."
-		},
-		"keepBottomControls": {
-			"name": "Keep Bottom Controls",
-			"values": {
-				"defaultnone": "Hide all controls",
-				"macrobaronly": "Allow the hotbar",
-				"camerasonly": "Allow the cameras",
-				"both": "Allow the hotbar and the cameras",
-				"macroplusfps": "Allow the hotbar and the FPS meter",
-				"cameraplusfps": "Allow the cameras and the FPS meter",
-				"bothplusfps": "Allow the hotbar, the cameras and the FPS meter",
-				"fpsonly": "Allow only FoundryVTT's FPS meter"
+		"modulename": "HTML To Scene",
+		"scenesettings":{
+			"pathPlaceholder": "Relative File Path from \"Data\" to a .HTML file or a URL",
+			"uisettings": "UI Settings",
+			"miscsettings": "Miscellaneous Settings",
+			"advsettings": "Advanced Settings",
+			"recommendationtip": "Protip: ",
+			"warningtip":"WARNING: ",
+			"enable": {
+				"name": "Enable",
+				"desc": "Enables HTML To Scene on this scene."
 			},
-			"desc": "Allows you to select how do you want the bottom controls be displayed."
-		},
-		"spaceRight": {
-			"name": "Respect Sidebar's Space",
-			"desc": "Adds an empty space under the sidebar.",
-			"tip": "You can change the color of the canvas' background color to affect the color behind the controls."
-		},
-		"rightDisabled": {
-			"name": "Hide Sidebar",
-			"desc": "Hides the sidebar from the UI, enabling back the scene changer on the top. (Ideal if your group communicates via voice chat or doesn't need to throw dice).",
-			"tip": "You might want to have other scene visible to gain back normal FoundryVTT's controls. (If not, you can always disable this module for the current scene)."
-		},
-		"hidePaused": {
-			"name": "Hide 'Game Paused'",
-			"desc": "Hides 'Game Paused' over the HTML file if the game is paused."
-		},
-		"hideSmallTime": {
-			"name": "Hide 'SmallTime'",
-			"desc": "Hides SmallTime's clock (if active)."
-		},
-		"hideBoard": {
-			"name": "Hide FoundryVTT's Board",
-			"desc": "Hides the board for a noticeable performace boost. (You WILL NOT render the canvas).",
-			"tip": "Other modules that may depend on the board might malfunction or do nothing, check your browser's console."
-		},
-		"passData": {
-			"name": "Enable Helpers For Two-Way Communication",
-			"desc": "Puts in use inactive variables to help to make two way communication between the iframe and FoundryVTT easier. See the wiki on GitHub for a better explanation.",
-			"tip": "To fully make use of this you will need to have coding and macro knowledge."
-		},
-		"dataUpdateRate": {
-			"name": "FoundryVTTAccess Update Rate",
-			"values": {
-				"default": "Don't update. Refresh to update",
-				"fivesec": "One update every 5 seconds",
-				"onesec": "One update each second",
-				"halfsec": "Two updates per second",
-				"cuarterofasec": "Four updates per second",
-				"realtime":	"Real-time"
+			"fileLoc": {
+				"name": "Select HTML file",
+				"hint": "You can select any HTML file stored on your FoundryVTT's data folder by using a relative path.",
+				"tip": "Do it on a empty canvas to increase performance. You can also put some websites that allow iframes."
 			},
-			"desc": "Changes the speed that the variable FoundryVTTAccess updates with new information. Use updateRate to sync it with your iframe.",
-			"tip": "This could affect performace. Depends on the use."
-		},
-		"iFrameRefreshRate": {
-			"name": "IFrame Refreshing",
-			"values": {
-				"defaultnone": "It WILL NOT forcefully updated",
-				"oneminute": "It will be forcefully updated once every minute",
-				"thirtyseconds": "It will be forcefully updated once every thirty seconds",
-				"fifteenseconds": "It will be forcefully updated once every fifteen seconds",
-				"tenseconds": "It will be forcefully updated once every ten seconds",
-				"fiveseconds":	"It will be forcefully updated once every five seconds"
+			"minUI": {
+				"name": "Minimal User Interface",
+				"desc": "Hides unnecessary FoundryVTT's UI elements while a HTML file is being displayed."
 			},
-			"desc": "Changes the speed that the IFrame is forcefully refreshed.",
-			"tip": "This feature is intended to provide a way to reload the Iframe without having to reload FoundryVTT. You shouldn't use this as a way to refresh information from it, as it will attempt the reload to all players, having to serve everything again."
+			"keepTop": {
+				"name": "Keep Scene Changer",
+				"desc": "Maintains the Scene Changer at the top of the screen in any case."
+			},
+			"keepPlayerList": {
+				"name": "Keep Player List",
+				"desc": "Maintains the player list in its original position."
+			},
+			"keepBottomControls": {
+				"name": "Keep Bottom Controls",
+				"values": {
+					"defaultnone": "Hide all controls",
+					"macrobaronly": "Allow the hotbar",
+					"camerasonly": "Allow the cameras",
+					"both": "Allow the hotbar and the cameras",
+					"macroplusfps": "Allow the hotbar and the FPS meter",
+					"cameraplusfps": "Allow the cameras and the FPS meter",
+					"bothplusfps": "Allow the hotbar, the cameras and the FPS meter",
+					"fpsonly": "Allow only FoundryVTT's FPS meter"
+				},
+				"desc": "Allows you to select how do you want the bottom controls be displayed."
+			},
+			"spaceRight": {
+				"name": "Respect Sidebar's Space",
+				"desc": "Adds an empty space under the sidebar.",
+				"tip": "You can change the color of the canvas' background color to affect the color behind the controls."
+			},
+			"rightDisabled": {
+				"name": "Hide Sidebar",
+				"desc": "Hides the sidebar from the UI, enabling back the scene changer on the top. (Ideal if your group communicates via voice chat or doesn't need to throw dice).",
+				"tip": "You might want to have other scene visible to gain back normal FoundryVTT's controls. (If not, you can always disable this module for the current scene)."
+			},
+			"hidePaused": {
+				"name": "Hide 'Game Paused'",
+				"desc": "Hides 'Game Paused' over the HTML file if the game is paused."
+			},
+			"hideSmallTime": {
+				"name": "Hide 'SmallTime'",
+				"desc": "Hides SmallTime's clock (if active)."
+			},
+			"hideBoard": {
+				"name": "Hide FoundryVTT's Board",
+				"desc": "Hides the board for a noticeable performance boost. (You WILL NOT render the canvas).",
+				"tip": "Other modules that may depend on the board might malfunction or do nothing, check your browser's console."
+			},
+			"passData": {
+				"name": "Enable Helpers For Two-Way Communication",
+				"desc": "Puts in use inactive variables to help to make two way communication between the iframe and FoundryVTT easier. See the wiki on GitHub for a better explanation.",
+				"tip": "To fully make use of this you will need to have coding and macro knowledge."
+			},
+			"dataUpdateRate": {
+				"name": "FoundryVTTAccess Update Rate",
+				"values": {
+					"default": "Don't update. Refresh to update",
+					"fivesec": "One update every 5 seconds",
+					"onesec": "One update each second",
+					"halfsec": "Two updates per second",
+					"cuarterofasec": "Four updates per second",
+					"realtime":	"Real-time"
+				},
+				"desc": "Changes the speed that the variable FoundryVTTAccess updates with new information. Use updateRate to sync it with your iframe.",
+				"tip": "This could affect performance. Depends on the use."
+			},
+			"iFrameRefreshRate": {
+				"name": "IFrame Refreshing",
+				"values": {
+					"defaultnone": "It WILL NOT forcefully updated",
+					"oneminute": "It will be forcefully updated once every minute",
+					"thirtyseconds": "It will be forcefully updated once every thirty seconds",
+					"fifteenseconds": "It will be forcefully updated once every fifteen seconds",
+					"tenseconds": "It will be forcefully updated once every ten seconds",
+					"fiveseconds":	"It will be forcefully updated once every five seconds"
+				},
+				"desc": "Changes the speed that the iframe is forcefully refreshed.",
+				"tip": "This feature is intended to provide a way to reload the iframe without having to reload FoundryVTT. You shouldn't use this as a way to refresh information from it, as it will attempt the reload to all players, having to serve everything again."
+			},
+			"autoMacros":{
+				"name": "Automated Macros",
+				"desc": "This setting allows you to execute macros on different hooks. You have the type the EXACT name of the macro. See the wiki on GitHub for a better explanation.",
+				"htmltosceneReadyMacro": "As soon as HTML To Scene loads the iframe and HTMLAccess is injected. (Once)",
+				"iframeReadyMacro": "As soon as the iframeReady hook is triggered (Compatible sources only)",
+				"iframeUpdatedMacro": "As soon as the iframeUpdated hook is triggered (Compatible sources only)"
+			},
+			"rememberjsexecution": "Please, remember to input only files that you fully trust. You might be allowing unwanted javascript execution in your system. And that is bad."
 		},
-		"rememberjsexecution": "Please, remember to input only files that you fully trust. You might be allowing unwanted javascript execution in your system. And that is bad."
+		"worldsettings":{
+			"showLogo":{
+				"name": "Heavy Handling The FoundryVTT Logo",
+				"hint": "When disabled, makes HTMLToScene to ONLY hide the logo when needed. (It won't show it up after a scene change. This allows some compatibility with some modules and themes that alter the logo that normally don't work)"
+			}
+		}
 	}
 }

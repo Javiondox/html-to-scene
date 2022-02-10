@@ -1,101 +1,116 @@
 {
 	"htmltoscene": {
-		"title": "HTML A Escena",
-		"pathPlaceholder": "Ruta relativa desde \"Data\" a un archivo .HTML o una URL",
-		"uisettings": "Ajustes de Interfaz",
-		"miscsettings": "Ajustes Misceláneos",
-		"advsettings": "Ajustes Avanzados",
-		"recommendationtip": "Recomendación: ",
-		"warningtip":"CUIDADO: ",
-		"enable": {
-			"name": "Activar",
-			"desc": "Activa HTML A Escena en esta escena."
-		},
-		"fileLoc": {
-			"name": "Selecciona Un Fichero HTML",
-			"hint": "Puedes seleccionar cualquier fichero HTML almacenado en la carpeta data de tu FoundryVTT utilizando una ruta relativa.",
-			"tip": "Hazlo en una escena en blanco para aumentar el rendimiento. También puedes introducir algunas páginas web que permitan iframes."
-		},
-		"minUI": {
-			"name": "Interfaz Mínima",
-			"desc": "Esconde elementos innecesarios de la interfaz de FoundryVTT mientras un fichero HTML está siendo mostrado."
-		},
-		"keepTop": {
-			"name": "Mantener El Cambiador De Jscenas",
-			"desc": "Mantiene el cambiador de escenas en la parte superior de la pantalla en cualquier caso."
-		},
-		"keepPlayerList": {
-			"name": "Mantener La Lista De Jugadores",
-			"desc": "Mantiene la lista de jugadores en su posición original."
-		},
-		"keepBottomControls": {
-			"name": "Mantener Los Controles Inferiores",
-			"values": {
-				"defaultnone": "Esconde todos los controles",
-				"macrobaronly": "Permite la barra de acceso rápido",
-				"camerasonly": "Permite las cámaras",
-				"both": "Permite la barra de acceso rápido y las cámaras",
-				"macroplusfps": "Permite la barra de acceso rápido y el indicador de fotogramas por segundo",
-				"cameraplusfps": "Permite las cámaras y el indicador de fotogramas por segundo",
-				"bothplusfps": "Permite la barra de acceso rápido, las cámaras y el indicador de fotogramas por segundo",
-				"fpsonly": "Permite únicamente el indicador de fotogramas por segundo de FoundryVTT"
+		"modulename": "HTML A Escena",
+		"scenesettings": {
+			"pathPlaceholder": "Ruta relativa desde \"Data\" a un archivo .HTML o una URL",
+			"uisettings": "Ajustes de Interfaz",
+			"miscsettings": "Ajustes Misceláneos",
+			"advsettings": "Ajustes Avanzados",
+			"recommendationtip": "Recomendación: ",
+			"warningtip":"CUIDADO: ",
+			"enable": {
+				"name": "Activar",
+				"desc": "Activa HTML A Escena en esta escena."
 			},
-			"desc": "Te permite seleccionar como quieres que los controles inferiores sean mostrados."
-		},
-		"spaceRight": {
-			"name": "Respeta El Espacio De La Barra Lateral",
-			"desc": "Añade un espacio en blanco bajo la barra lateral.",
-			"tip": "Puedes cambiar el color del fondo de la escena para cambiar el color que se muestra bajo los controles."
-		},
-		"rightDisabled": {
-			"name": "Esconder La Barra Lateral",
-			"desc": "Esconde la barra lateral, reactivando el intercambiador de escenas en la parte superior. (Ideal si tu grupo se comunica por chat de voz o no necesita lanzar dados).",
-			"tip": "Posiblemente quedrás tener otra escena visible para ganar de vuelta los controles normales de FoundryVTT. (Si no, siempre puedes desactivar el modulo para la escena actual)."
-		},
-		"hidePaused": {
-			"name": "Esconde 'Juego en Pausa'",
-			"desc": "Esconde 'Juego en Pausa' haciendo que no se muestre sobre el fichero HTML cargado si el juego está pausado."
-		},
-		"hideSmallTime": {
-			"name": "Esconde 'SmallTime'",
-			"desc": "Esconde el reloj de SmallTime (en el acaso de estar activado)."
-		},
-		"hideBoard": {
-			"name": "Esconde El Tablero De FoundryVTT",
-			"desc": "Esconde el tablero por un aumento de rendimiento palpable. (NO renderizarás el canvas).",
-			"tip": "Otros modulos que usen el tablero pueden empezar a malfuncionar o hacer nada, comprueba la consola de tu navegador."
-		},
-		"passData": {
-			"name": "Activa Ayudas Para La Intercomunicación",
-			"desc": "Pone en uso variables inactivas para ayudar a realizar la intercomunicación entre el iframe y FoundryVTT. Ver la wiki de GitHub para una mejor explicación (Inglés).",
-			"tip": "Para dar uso completo a esto, tendrás que tener conocimientos de programación y de macros."
-		},
-		"dataUpdateRate": {
-			"name": "Tasa De Actualización De FoundryVTTAccess",
-			"values": {
-				"default": "No se actualiza. Refrescar para actualizar",
-				"fivesec": "Una actualización cada 5 segundos",
-				"onesec": "Una actualización cada segundo",
-				"halfsec": "Dos actualizaciones por segundo",
-				"cuarterofasec": "Cuatro actualizaciones por segundo",
-				"realtime":	"Tiempo real"
+			"fileLoc": {
+				"name": "Selecciona Un Fichero HTML",
+				"hint": "Puedes seleccionar cualquier fichero HTML almacenado en la carpeta data de tu FoundryVTT utilizando una ruta relativa.",
+				"tip": "Hazlo en una escena en blanco para aumentar el rendimiento. También puedes introducir algunas páginas web que permitan iframes."
 			},
-			"desc": "Cambia la velocidad en la que la variable FoundryVTTAccess se actualiza con información nueva. Utiliza updateRate para sincronizarla con tu iframe.",
-			"tip": "Esto podría afectar al rendimiento. Depende en el uso."
-		},
-		"iFrameRefreshRate": {
-			"name": "Actualización de IFrame",
-			"values": {
-				"defaultnone": "NO será forzadamente actualizado",
-				"oneminute": "Será forzadamente actualizado cada minuto",
-				"thirtyseconds": "Será forzadamente actualizado cada treinta segundos",
-				"fifteenseconds": "Será forzadamente actualizado cada quince segundos",
-				"tenseconds": "Será forzadamente actualizado cada diez segundos",
-				"fiveseconds":	"Será forzadamente actualizado cada cinco segundos"
+			"minUI": {
+				"name": "Interfaz Mínima",
+				"desc": "Esconde elementos innecesarios de la interfaz de FoundryVTT mientras un fichero HTML está siendo mostrado."
 			},
-			"desc": "Cambia la velocidad en la que el IFrame es forzadamente actualizado",
-			"tip": "Esta característica está pensada para proporcionar una forma de recargar el IFrame sin tener que recargar FoundryVTT. No debes usar esto como una forma de refrescar la información del mismo, ya que forzará la recarga a todos los jugadores, teniendo que servir todo de nuevo."
+			"keepTop": {
+				"name": "Mantener El Cambiador De Escenas",
+				"desc": "Mantiene el cambiador de escenas en la parte superior de la pantalla en cualquier caso."
+			},
+			"keepPlayerList": {
+				"name": "Mantener La Lista De Jugadores",
+				"desc": "Mantiene la lista de jugadores en su posición original."
+			},
+			"keepBottomControls": {
+				"name": "Mantener Los Controles Inferiores",
+				"values": {
+					"defaultnone": "Esconde todos los controles",
+					"macrobaronly": "Permite la barra de acceso rápido",
+					"camerasonly": "Permite las cámaras",
+					"both": "Permite la barra de acceso rápido y las cámaras",
+					"macroplusfps": "Permite la barra de acceso rápido y el indicador de fotogramas por segundo",
+					"cameraplusfps": "Permite las cámaras y el indicador de fotogramas por segundo",
+					"bothplusfps": "Permite la barra de acceso rápido, las cámaras y el indicador de fotogramas por segundo",
+					"fpsonly": "Permite únicamente el indicador de fotogramas por segundo de FoundryVTT"
+				},
+				"desc": "Te permite seleccionar como quieres que los controles inferiores sean mostrados."
+			},
+			"spaceRight": {
+				"name": "Respeta El Espacio De La Barra Lateral",
+				"desc": "Añade un espacio en blanco bajo la barra lateral.",
+				"tip": "Puedes cambiar el color del fondo de la escena para cambiar el color que se muestra bajo los controles."
+			},
+			"rightDisabled": {
+				"name": "Esconder La Barra Lateral",
+				"desc": "Esconde la barra lateral, reactivando el intercambiador de escenas en la parte superior. (Ideal si tu grupo se comunica por chat de voz o no necesita lanzar dados).",
+				"tip": "Posiblemente querrás tener otra escena visible para ganar de vuelta los controles normales de FoundryVTT. (Si no, siempre puedes desactivar el modulo para la escena actual)."
+			},
+			"hidePaused": {
+				"name": "Esconde 'Juego en Pausa'",
+				"desc": "Esconde 'Juego en Pausa' haciendo que no se muestre sobre el fichero HTML cargado si el juego está pausado."
+			},
+			"hideSmallTime": {
+				"name": "Esconde 'SmallTime'",
+				"desc": "Esconde el reloj de SmallTime (en el acaso de estar activado)."
+			},
+			"hideBoard": {
+				"name": "Esconde El Tablero De FoundryVTT",
+				"desc": "Esconde el tablero por un aumento de rendimiento palpable. (NO renderizarás el canvas).",
+				"tip": "Otros módulos que usen el tablero pueden empezar a malfuncionar o hacer nada, comprueba la consola de tu navegador."
+			},
+			"passData": {
+				"name": "Activa Ayudas Para La Intercomunicación",
+				"desc": "Pone en uso variables inactivas para ayudar a realizar la intercomunicación entre el iframe y FoundryVTT. Ver la wiki de GitHub para una mejor explicación (Inglés).",
+				"tip": "Para dar uso completo a esto, tendrás que tener conocimientos de programación y de macros."
+			},
+			"dataUpdateRate": {
+				"name": "Tasa De Actualización De FoundryVTTAccess",
+				"values": {
+					"default": "No se actualiza. Refrescar para actualizar",
+					"fivesec": "Una actualización cada 5 segundos",
+					"onesec": "Una actualización cada segundo",
+					"halfsec": "Dos actualizaciones por segundo",
+					"cuarterofasec": "Cuatro actualizaciones por segundo",
+					"realtime":	"Tiempo real"
+				},
+				"desc": "Cambia la velocidad en la que la variable FoundryVTTAccess se actualiza con información nueva. Utiliza updateRate para sincronizarla con tu iframe.",
+				"tip": "Esto podría afectar al rendimiento. Depende en el uso."
+			},
+			"iFrameRefreshRate": {
+				"name": "Actualización de IFrame",
+				"values": {
+					"defaultnone": "NO será forzosamente actualizado",
+					"oneminute": "Será forzosamente actualizado cada minuto",
+					"thirtyseconds": "Será forzosamente actualizado cada treinta segundos",
+					"fifteenseconds": "Será forzosamente actualizado cada quince segundos",
+					"tenseconds": "Será forzosamente actualizado cada diez segundos",
+					"fiveseconds":	"Será forzosamente actualizado cada cinco segundos"
+				},
+				"desc": "Cambia la velocidad en la que el iframe es forzosamente actualizado",
+				"tip": "Esta característica está pensada para proporcionar una forma de recargar el iframe sin tener que recargar FoundryVTT. No debes usar esto como una forma de refrescar la información del mismo, ya que forzará la recarga a todos los jugadores, teniendo que servir todo de nuevo."
+			},
+			"autoMacros":{
+				"name": "Macros Automatizadas",
+				"desc": "Este ajuste te permite ejecutar macros en diferentes hooks. Tienes que escribir el nombre EXACTO de la macro. Mira la wiki en GitHub para una mejor explicación.",
+				"htmltosceneReadyMacro": "Tan pronto como el modulo cargue el iframe y HTMLAccess sea inyectado (Una vez)",
+				"iframeReadyMacro": "Tan pronto como el hook iframeReady sea activado (Orígenes compatibles solo)",
+				"iframeUpdatedMacro": "Tan pronto como el hook iframeUpdated sea activado (Orígenes compatibles solo)"
+			},
+			"rememberjsexecution": "Por favor, recuerde de introducir solo ficheros en los que confíe plenamente. Puedes estar permitiendo ejecución de javascript no solicitado en tu sistema. Y eso es malo."
 		},
-		"rememberjsexecution": "Por favor, recuerde de introducir solo ficheros en los que confie plenamente. Puedes estar permitiendo ejecución de javascript no solicitado en tu sistema. Y eso es malo."
+		"worldsettings":{
+			"showLogo":{
+				"name": "Manejo Pesado Del Logo De FoundryVTT",
+				"hint": "Cuando se desactiva, hace que HTMLToScene esconda el logo únicamente cuando sea necesario. (No se mostrará en un cambio de escena. Permitiendo esto alguna compatibilidad con modulos y temas que alteren el logo que normalmente no funcionan)"
+			}
+		}
 	}
 }
