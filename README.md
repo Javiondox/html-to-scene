@@ -35,6 +35,7 @@ Here is the full list of options. Including those not included in the image.
 |-|Enable Helpers For Two-Way Communication | See [Two-Way communication helpers](https://github.com/Javiondox/html-to-scene/wiki/Two-way-communication-helpers)|
 |-|FoundryVTTAccess Update Rate | Controls the speed in what the injected object "FoundryVTT" (In the HTML) is updated. See [Two-Way communication helpers](https://github.com/Javiondox/html-to-scene/wiki/Two-way-communication-helpers)|
 |-|IFrame Refreshing | Allows and controls the speed in which the iframe is forcefully reloaded. (On high speeds and/or big proyects can cause out of memory errors on the tab)|
+|-|Automated Macros | It allows you to use macros on different hooks. See [Hooks](https://github.com/Javiondox/html-to-scene/wiki/Hooks) |
 
 ## Limitations and warnings
 
